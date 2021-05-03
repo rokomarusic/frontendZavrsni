@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
 
+  logout = () => {
+    sessionStorage.removeItem('token');
+    window.location = '/';
+  }
+
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
@@ -14,6 +19,9 @@ export default class Navbar extends Component {
           </li>
           <li className="navbar-item">
           <Link to="/admin/drzave" className="nav-link">Drzave</Link>
+          </li>
+          <li className="navbar-item">
+            <button onClick={this.logout}>Logout</button>
           </li>
         </ul>
         </div>
