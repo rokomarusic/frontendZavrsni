@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class DodajDrzavu extends Component {
+class IzmjeniDrzavu extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       nazivtim: '',
       fifakod: '',
-      errMsg: ''
+      errMsg: '',
+      idtim: '',
     };
   }
 
@@ -20,7 +21,8 @@ class DodajDrzavu extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
+    let id = this.props.id
+    console.log("ID SUBMITA " + id);
     this.setState({
       nazivtim: '',
       fifakod: '',
@@ -35,27 +37,28 @@ class DodajDrzavu extends Component {
     };
 
     axios
-      .post('http://localhost:3001/admin/dodajdrzavu', drzava)
-      .then(() => console.log('Dodana drzava'))
+      .post('http://localhost:3001/admin/izmjenidrzavu/' + id, drzava)
+      .then(() => console.log('Izmjenjena drzava'))
       .catch(err => {
         console.log(err)
         this.setState({
           nazivtim: '',
           fifakod: '',
-          errMsg: 'Drzava vec dodana u bazu',
+          errMsg: 'Drzava s ovim fifa kodom već postoji u bazi',
         });
       });
       
-      if(this.state.errMsg){
-        window.location = '/admin/drzave'
+      if(!this.state.errMsg){
+        window.location = '/admin/drzava/' + id
       }
   };
 
   render() {
     return (
       <div>
-        <br />
         <div className="container">
+          <hr/>
+          <h3>Izmjeni podatke o državi</h3>
           <form onSubmit={this.handleSubmit}>
             <div>
               <input
@@ -77,15 +80,16 @@ class DodajDrzavu extends Component {
             <br />
             <div>
               <button className="btn btn-success" type="submit">
-                Dodaj državu
+                Izmjeni državu
               </button>
             </div>
           </form>
+          <hr/>
         </div>
-        {this.state.errMsg ? <div>{this.state.errMsg}</div> : null}
+        {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
       </div>
     );
   }
 }
 
-export default DodajDrzavu;
+export default IzmjeniDrzavu;

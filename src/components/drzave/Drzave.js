@@ -25,10 +25,21 @@ class Drzave extends Component {
 			})
 	}
 
+	izbrisiDrzavu(id) {
+		console.log("unutar izbrisi za " + id)
+		axios.delete('http://localhost:3001/admin/drzava/'+id)
+		  .then(response => { console.log(response.data)});
+	
+		this.setState({
+		  drzave: this.state.drzave.filter(el => el.idtim !== id)
+		})
+	  }
+
 	render() {
 		const { drzave, errorMsg } = this.state
 		return (
 			<div>
+				<h2>Dodaj novu državu</h2>
                 <DodajDrzavu/>
 				Drzave
 				{drzave.length
@@ -36,14 +47,18 @@ class Drzave extends Component {
                     <div key={drzava.iddrzava}>
                         {drzava.nazivtim}
                         <br/>
-                        <Link to={"/admin/igrac/" + drzava.iddrzava}>
+                        <Link to={"/admin/drzava/" + drzava.idtim}>
                             <button type="button">
                                 Pregledaj drzavu
                             </button>
                         </Link>
+						<br/>
+						<button onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
+							Izbriši
+						</button>
                     </div>)
                 : null}
-        {errorMsg ? <p style={{color: "red"}}>{errorMsg}</p> : null}
+        		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}
 			</div>
 		)
 	}
