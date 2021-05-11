@@ -37,6 +37,18 @@ class IzmjeniStadion extends Component {
       kapacitetstadion
     };
 
+    if(!stadion.nazivstadion.trim()){
+      this.setState({nazivstadion: ''})
+      this.setState({errMsg: "Naziv stadiona ne smije biti prazan!"})
+      return;
+  }
+
+    if(isNaN(stadion.kapacitet) || stadion.kapacitet < 0){
+      this.setState({kapacitet: ''})
+      this.setState({errMsg: "Kapacitet stadiona mora biti broj veći od nule!"})
+      return;
+    }
+
     axios
       .post('http://localhost:3001/admin/izmjenistadion/' + idstadion, stadion)
       .then(() => console.log('Izmjenjen stadion'))

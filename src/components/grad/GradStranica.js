@@ -36,7 +36,7 @@ class GradStranica extends Component {
 				<hr/>
 				<IzmjeniGrad id={this.props.match.params.id}/>
                 {errorMsg ? <div>{errorMsg}</div> : null}
-				<Link to={"/admin/stadioni/" + this.props.match.params.id}>
+				<Link to={"/admin/stadioni/" + this.props.match.params.id +"/?grad=" + nazivgrad}>
                     <button type="button">
                         Pregledaj stadione
                     </button>

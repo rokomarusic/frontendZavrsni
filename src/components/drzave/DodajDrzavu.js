@@ -36,19 +36,16 @@ class DodajDrzavu extends Component {
 
     axios
       .post('http://localhost:3001/admin/dodajdrzavu', drzava)
-      .then(() => console.log('Dodana drzava'))
+      .then((res) => {
+        window.location = '/admin/drzave'
+      })
       .catch(err => {
         console.log(err)
         this.setState({
-          nazivtim: '',
-          fifakod: '',
           errMsg: 'Drzava s ovim fifa kodom već postoji u bazi',
         });
       });
-      
-      if(!this.state.errMsg){
-        window.location = '/admin/drzave'
-      }
+
   };
 
   render() {

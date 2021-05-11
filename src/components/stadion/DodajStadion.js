@@ -39,6 +39,18 @@ class DodajStadion extends Component {
       idgrad
     };
 
+    if(!stadion.nazivstadion.trim()){
+      this.setState({nazivstadion: ''})
+      this.setState({errMsg: "Naziv stadiona ne smije biti prazan!"})
+      return;
+  }
+
+    if(isNaN(stadion.kapacitet) || stadion.kapacitet < 0){
+      this.setState({kapacitet: ''})
+      this.setState({errMsg: "Kapacitet stadiona mora biti broj veći od nule!"})
+      return;
+    }
+
     axios
       .post('http://localhost:3001/admin/dodajstadion', stadion)
       .then(() => console.log('Dodan stadion'))

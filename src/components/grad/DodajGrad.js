@@ -34,6 +34,12 @@ class DodajGrad extends Component {
       iddrzava
     };
 
+    if(!grad.nazivgrad.trim()){
+      this.setState({nazivgrad: ''})
+      this.setState({errMsg: "Naziv grada ne smije biti prazan!"})
+      return;
+  }
+
     axios
       .post('http://localhost:3001/admin/dodajgrad', grad)
       .then(() => console.log('Dodana grad'))

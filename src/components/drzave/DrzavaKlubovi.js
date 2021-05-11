@@ -1,26 +1,35 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import DodajDrzavu from './DodajDrzavu'
-class Drzave extends Component {
+import DodajKlub from '../klub/DodajKlub'
+
+
+class DrzavaKlubovi extends Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-      drzave: [],
-	  drzaveBaza:[],
-	  filter: '',
-      errorMsg: ''
+      klubovi: [],
+	  kluboviBaza: [],
+      errorMsg: '',
+	  naziv: '',
+	  filter: ''
 		}
 	}
 
 	componentDidMount() {
+        console.log(this.props.match.params);
+        let id = this.props.match.params.id
+		console.log(this.props.location.search.substring(8));
+		this.setState({naziv: this.props.location.search.substring(8)});
+		
+        console.log("ID " + id)
 		axios
-			.get('http://localhost:3001/admin/drzave')
+			.get('http://localhost:3001/admin/drzava/klubovi/' + id)
 			.then(response => {
 				console.log(response)
-				this.setState({ drzave: [],
-								drzaveBaza: response.data })
+				this.setState({ klubovi: [],
+								kluboviBaza: response.data })
 			})
 			.catch(error => {
         console.log(error)
@@ -36,9 +45,9 @@ class Drzave extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault();
-	
+        console.log(this.state.filter)
 		this.setState({
-			drzave: this.state.drzaveBaza.filter(el => el.nazivtim.toLowerCase().includes(this.state.filter.toLowerCase()))
+			klubovi: this.state.kluboviBaza.filter(el => el.nazivtim.toLowerCase().includes(this.state.filter.toLowerCase()))
 		  })
 
 		  this.setState({
@@ -46,31 +55,32 @@ class Drzave extends Component {
 		  });
 	  };
 
-	izbrisiDrzavu(id) {
+	izbrisiKlub(id) {
 		console.log("unutar izbrisi za " + id)
-		axios.delete('http://localhost:3001/admin/drzava/'+id)
+		axios.delete('http://localhost:3001/admin/klub/'+id)
 		  .then(response => { console.log(response.data)});
 	
 		this.setState({
-		  drzave: this.state.drzave.filter(el => el.idtim !== id)
+		  klubovi: this.state.klubovi.filter(el => el.idtim !== id)
 		})
 	  }
 
 	render() {
-		const { drzave, errorMsg } = this.state
+		const { klubovi, errorMsg, naziv } = this.state
 		return (
 			<div>
-				<h2>Dodaj novu državu</h2>
-                <DodajDrzavu/>
-				Drzave
+				<h1>{naziv}</h1>
+				<hr/>
+                <DodajKlub iddrzava={this.props.match.params.id}/>
+				Klubovi
 				<hr/>
 				<form onSubmit={this.handleSubmit}>
-					<h2>Pretraži države</h2>
+					<h2>Pretraži klubove</h2>
 					<div>
               			<input
                 			type="text"
                 			name="filter"
-                			placeholder="naziv države"
+                			placeholder="naziv kluba"
                 			onChange={this.handleInputChange}
               			/>
 						<div>
@@ -79,18 +89,18 @@ class Drzave extends Component {
             		</div>
 				</form>
 				<hr/>
-				{drzave.length
-					? drzave.map(drzava => 
-                    <div key={drzava.iddrzava}>
-                        {drzava.nazivtim}
+				{klubovi.length
+					? klubovi.map(klub => 
+                    <div key={klub.idklub}>
+                        {klub.nazivtim}
                         <br/>
-                        <Link to={"/admin/drzava/" + drzava.idtim}>
+                        <Link to={"/admin/klub/" + klub.idtim}>
                             <button type="button">
-                                Pregledaj drzavu
+                                Pregledaj klub
                             </button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
+						<button onClick={() => { this.izbrisiKlub(klub.idtim) }}>
 							Izbriši
 						</button>
                     </div>)
@@ -101,4 +111,4 @@ class Drzave extends Component {
 	}
 }
 
-export default Drzave
+export default DrzavaKlubovi

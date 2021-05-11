@@ -3,6 +3,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import IzmjeniDrzavu from './IzmjeniDrzavu'
 
+
 class DrzavaStranica extends Component {
 	constructor(props) {
 		super(props)
@@ -16,7 +17,7 @@ class DrzavaStranica extends Component {
 	}
 
 	componentDidMount() {
-        console.log(this.props.match.params);
+        console.log(this.props);
         let id = this.props.match.params.id
         console.log("ID " + id)
 		axios
@@ -42,9 +43,19 @@ class DrzavaStranica extends Component {
                 <h2>{fifakod}</h2>
                 <IzmjeniDrzavu id={idtim}/>
                 {errorMsg ? <div>{errorMsg}</div> : null}
-                <Link to={"/admin/gradovi/" + iddrzava}>
+                <Link to={"/admin/gradovi/" + iddrzava +"/?drzava=" + nazivtim}>
                     <button type="button">
                         Pregledaj gradove
+                    </button>
+                </Link>
+                <Link to={"/admin/natjecanja/" + iddrzava +"/?drzava=" + nazivtim}>
+                    <button type="button">
+                        Pregledaj natjecanja
+                    </button>
+                </Link>
+                <Link to={"/admin/klubovi/" + iddrzava +"/?drzava=" + nazivtim}>
+                    <button type="button">
+                        Pregledaj klubove
                     </button>
                 </Link>
 			</div>
