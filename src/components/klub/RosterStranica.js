@@ -38,7 +38,7 @@ class RosterStranica extends Component {
 				{igraci.length
 					? igraci.map(igrac => 
                     <div key={igrac.idigrac}>
-                        {igrac.imeigrac} {igrac.prezimeigrac}
+                        {igrac.nadimakigrac ? igrac.nadimakigrac : igrac.imeigrac + " " + igrac.prezimeigrac}
                         <br/>
                         <Link to={"/admin/igrac/" + igrac.idigrac}>
                             <button type="button">

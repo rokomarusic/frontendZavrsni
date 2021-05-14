@@ -1,8 +1,8 @@
-import Igraci from './components/igraci';
+import Igraci from './components/igrac/igraci';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import Navbar from './components/navbar.component'
-import IgracStranica from './components/igracStranica'
+import IgracStranica from './components/igrac/igracStranica'
 import Drzave from './components/drzave/Drzave'
 import DrzavaStranica from './components/drzave/DrzavaStranica'
 import DrzavaGradovi from './components/drzave/DrzavaGradovi'

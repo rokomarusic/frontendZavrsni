@@ -35,13 +35,13 @@ class DrzavaNatjecanja extends Component {
 			})
 	}
 
-	izbrisiGrad(id) {
+	izbrisiNatjecanje(id) {
 		console.log("unutar izbrisi za " + id)
-		axios.delete('http://localhost:3001/admin/grad/'+id)
+		axios.delete('http://localhost:3001/admin/natjecanje/'+id)
 		  .then(response => { console.log(response.data)});
 	
 		this.setState({
-		  gradovi: this.state.gradovi.filter(el => el.idgrad !== id)
+		  natjecanja: this.state.natjecanja.filter(el => el.idnatjecanje !== id)
 		})
 	  }
 
@@ -64,7 +64,7 @@ class DrzavaNatjecanja extends Component {
                             </button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiGrad(natjecanje.idnatjecanje) }}>
+						<button onClick={() => { this.izbrisiNatjecanje(natjecanje.idnatjecanje) }}>
 							Izbriši
 						</button>
                     </div>)
