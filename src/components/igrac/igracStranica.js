@@ -3,6 +3,8 @@ import axios from 'axios'
 import IzmjeniIgraca from './IzmjeniIgraca';
 import IzmjeniBoravakUKlubu from './IzmjeniBoravakUKlubu';
 import DodajBoravakUKlubu from './DodajBoravakUKlubu';
+import { PieChart } from 'react-minimal-pie-chart';
+
 //import {Link} from 'react-router-dom'
 
 
@@ -112,6 +114,19 @@ class IgracStranica extends Component {
 			})
 		
 	}
+
+	izbrisiBoravak(boravak) {
+		console.log(boravak)
+		axios.post('http://localhost:3001/admin/boravakuklubu/', boravak)
+		  .then(response => { console.log(response.data)});
+	
+		this.setState({
+		  klubovi: this.state.klubovi.filter(el => el.idklub !== boravak.idklub
+			|| el.idigrac !== boravak.idigrac
+			|| el.datumodigrazaklub !== boravak.datumodigrazaklub)
+		})
+	  }
+
 	render() {
 		const { igrac, klubovi, drzave, drzava, errorMsg, kluboviOpcije, sezone} = this.state
 		return (
@@ -121,11 +136,14 @@ class IgracStranica extends Component {
                 {errorMsg ? <div>{errorMsg}</div> : null}
 				<hr/>
 				<DodajBoravakUKlubu sezone={sezone} klubovi={kluboviOpcije} idigrac={igrac.idigrac} boravci={klubovi}/>
-				<hr/>
 				{klubovi.length ? klubovi.map(klub => 
 				<div key={klub.datumodigrazaklub}>
 					{klub.nazivtim} {klub.datumodigrazaklub} - {klub.datumdoigrazaklub ? klub.datumdoigrazaklub : " ?"}
 					<IzmjeniBoravakUKlubu igra_za_klub={klub} sezone={sezone} klubovi={kluboviOpcije} boravci={klubovi}/>
+					<button onClick={() => { this.izbrisiBoravak(klub) }}>
+						Izbriši
+					</button>
+					<hr/>
 				</div>) : null}
 				<h2>{drzava}</h2>
 				Datum rođenja: {igrac.datumrodenjaigrac}
@@ -133,6 +151,15 @@ class IgracStranica extends Component {
 				Preferirana noga: {igrac.jacanoga === 0 ? 'desna' : (igrac.jacanoga === 1 ? 'lijeva' : 'obje')}
 				<hr/>
 				<IzmjeniIgraca igrac={igrac} drzave={drzave}/>
+				<PieChart
+					data={[
+						{ title: 'One', value: 10, color: '#000000' },
+						{ title: 'Two', value: 10, color: '#C13C37' },
+						{ title: 'Three', value: 10, color: '#6A2135' },
+					]}
+					radius={10}
+					totalValue={30}
+				/>;
 			</div>
 		)
 	}

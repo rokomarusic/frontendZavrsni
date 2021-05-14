@@ -36,12 +36,7 @@ class IzmjeniBoravakUKlubu extends Component {
     for(let i = 0; i < this.props.boravci.length; i++){
         let date1 = new Date(this.props.boravci[i].datumodigrazaklub)
         let date2 = new Date(this.props.boravci[i].datumdoigrazaklub)   
-        console.log("?????")
-        console.log(date1)
-        console.log(date2)
-        console.log(datumod)
-        console.log(datumdo)
-        console.log("?????")
+
         if(date1 < datumod &&
             date2 > datumod){
                 return false;
@@ -172,7 +167,6 @@ class IzmjeniBoravakUKlubu extends Component {
             </div>
             
           </form>}
-          <hr/>
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
       </div>

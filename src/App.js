@@ -14,6 +14,7 @@ import NatjecanjeStranica from './components/natjecanje/NatjecanjeStranica'
 import DrzavaKlubovi from './components/drzave/DrzavaKlubovi';
 import KlubStranica from './components/klub/KlubStranica';
 import RosterStranica from './components/klub/RosterStranica'
+import NatjecanjeUtakmice from './components/natjecanje/NatjecanjeUtakmice';
 
 function setToken(userToken) {
   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -51,6 +52,7 @@ function App() {
       <Route path="/admin/klubovi/:id" component={DrzavaKlubovi} />
       <Route path="/admin/klub/:id" component={KlubStranica} />
       <Route path="/admin/roster/:id" component={RosterStranica} />
+      <Route path="/admin/utakmice/:id" component={NatjecanjeUtakmice}/>
       </div>
     </Router>
   );
