@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajSudionika from './DodajSudionika'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+
 
 class NatjecanjeStranica extends Component {
 	constructor(props) {
@@ -89,7 +92,7 @@ class NatjecanjeStranica extends Component {
 				<hr/>
 				<h2>Sudionici</h2>
 				<DodajSudionika idnatjecanje={this.props.match.params.id}/>
-				<form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži sudionike</h2>
 					<div>
               			<input
@@ -99,25 +102,25 @@ class NatjecanjeStranica extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži</button>
+							<Button type="submit">Pretraži</Button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				{sudionici.length
 					? sudionici.map(sudionik => 
                     <div key={sudionik.idtim}>
                         {sudionik.nazivtim}
 						<br/>
-						<button onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
 							Ukloni iz natjecanja
-						</button>
+						</Button>
                     </div>)
                 : null}
 
-				<Link to={"/admin/utakmice/" + iddrzava +"/?drzava=nazivtim"}>
-                    <button type="button">
+				<Link to={"/admin/utakmice/" + this.props.match.params.id}>
+                    <Button variant="info" type="button">
                         Pregledaj utakmice
-                    </button>
+                    </Button>
                 </Link>
 			</div>
 		)

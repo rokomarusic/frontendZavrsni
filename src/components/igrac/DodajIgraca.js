@@ -33,6 +33,12 @@ class DodajIgraca extends Component {
     };
   }
 
+  add2Hours = (date) => {
+    let temp = new Date(date);
+    temp.setUTCHours(temp.getUTCHours()+2)
+    return temp;
+  }
+
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -65,18 +71,18 @@ class DodajIgraca extends Component {
     } 
     if(this.state.datumrodenjaigrac){
       console.log(this.state.datumrodenjaigrac)
-      igrac.datumrodenjaigrac = this.state.datumrodenjaigrac
+      igrac.datumrodenjaigrac = this.add2Hours(this.state.datumrodenjaigrac)
     }else{
       this.setState({errMsg: "Morate odrediti datum rođenja igrača!"})
       return
     }
     if(this.state.datumodigrazadrzavu){
       console.log(this.state.datumodigrazadrzavu)
-      igrac.datumodigrazadrzavu = this.state.datumodigrazadrzavu
+      igrac.datumodigrazadrzavu = this.add2Hours(this.state.datumodigrazadrzavu)
     }
     if(this.state.datumdoigrazadrzavu){
       console.log(this.state.datumdoigrazadrzavu)
-      igrac.datumdoigrazadrzavu = this.state.datumdoigrazadrzavu
+      igrac.datumdoigrazadrzavu = this.add2Hours(this.state.datumdoigrazadrzavu)
     }
     if(this.state.imeigrac.trim()){
       console.log(this.state.imeigrac)

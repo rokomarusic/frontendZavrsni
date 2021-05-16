@@ -3,6 +3,7 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajGrad from '../grad/DodajGrad'
 import DodajNatjecanje from '../natjecanje/DodajNatjecanje'
+import Button from 'react-bootstrap/Button'
 
 
 class DrzavaNatjecanja extends Component {
@@ -58,15 +59,19 @@ class DrzavaNatjecanja extends Component {
                     <div key={natjecanje.idnatjecanje}>
                         {natjecanje.nazivnatjecanje} {natjecanje.godinasezona}
                         <br/>
+						<div>
                         <Link to={"/admin/natjecanje/" + natjecanje.idnatjecanje}>
-                            <button type="button">
+                            <Button variant="primary" type="button">
                                 Pregledaj natjecanje
-                            </button>
+                            </Button>
                         </Link>
-						<br/>
-						<button onClick={() => { this.izbrisiNatjecanje(natjecanje.idnatjecanje) }}>
+						</div>
+						<div>
+						<Button variant="danger" onClick={() => { this.izbrisiNatjecanje(natjecanje.idnatjecanje) }}>
 							Izbriši
-						</button>
+						</Button>
+						</div>
+						<br/>
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

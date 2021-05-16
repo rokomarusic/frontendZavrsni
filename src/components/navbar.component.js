@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
 
 export default class Navbar extends Component {
 
@@ -21,7 +22,7 @@ export default class Navbar extends Component {
           <Link to="/admin/drzave" className="nav-link">Drzave</Link>
           </li>
           <li className="navbar-item">
-            <button onClick={this.logout}>Logout</button>
+            <Button variant="outline-warning" onClick={this.logout}>Logout</Button>
           </li>
         </ul>
         </div>

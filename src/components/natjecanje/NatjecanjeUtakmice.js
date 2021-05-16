@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajGrad from '../grad/DodajGrad'
+import DodajUtakmicu from '../utakmica/DodajUtakmicu'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 
 class NatjecanjeUtakmice extends Component {
@@ -9,8 +12,8 @@ class NatjecanjeUtakmice extends Component {
 		super(props)
 
 		this.state = {
-            gradovi: [],
-            gradoviBaza: [],
+            utakmice: [],
+            utakmiceBaza: [],
             errorMsg: '',
             naziv: '',
             filter: ''
@@ -19,11 +22,11 @@ class NatjecanjeUtakmice extends Component {
 
 	async getRequest(id){
 		await axios
-			.get('http://localhost:3001/admin/gradovi/' + id)
+			.get('http://localhost:3001/admin/utakmice/' + id)
 			.then(response => {
 				console.log(response)
-				this.setState({ gradovi: [],
-								gradoviBaza: response.data })
+				this.setState({ utakmice: [],
+								utakmiceBaza: response.data })
 			})
 			.catch(error => {
         console.log(error)
@@ -34,8 +37,6 @@ class NatjecanjeUtakmice extends Component {
 	componentDidMount() {
         console.log(this.props.match.params);
         let id = this.props.match.params.id
-		console.log(this.props.location.search.substring(8));
-		this.setState({naziv: this.props.location.search.substring(8)});
 		this.getRequest(id)
         console.log("ID " + id)
 		
@@ -51,7 +52,7 @@ class NatjecanjeUtakmice extends Component {
 		e.preventDefault();
 	
 		this.setState({
-			gradovi: this.state.gradoviBaza.filter(el => el.nazivgrad.toLowerCase().includes(this.state.filter.toLowerCase()))
+			utakmice: this.state.utakmiceBaza.filter(el => el.nazivdomacin.toLowerCase().includes(this.state.filter.toLowerCase()))
 		  })
 
 		  this.setState({
@@ -70,43 +71,40 @@ class NatjecanjeUtakmice extends Component {
 	  }
 
 	render() {
-		const { gradovi, errorMsg, naziv } = this.state
+		const { utakmice, errorMsg, naziv } = this.state
 		return (
 			<div>
 				<h1>{naziv}</h1>
-				<hr/>
-                <DodajGrad iddrzava={this.props.match.params.id}/>
-				Gradovi
-				<hr/>
-				<form onSubmit={this.handleSubmit}>
-					<h2>Pretraži gradove</h2>
+				<DodajUtakmicu idnatjecanje={this.props.match.params.id}/>
+				<Form onSubmit={this.handleSubmit}>
+					<h2>Pretraži utakmice</h2>
 					<div>
               			<input
                 			type="text"
                 			name="filter"
-                			placeholder="naziv grada"
+                			placeholder="naziv domaćina"
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži gradove</button>
+							<button type="submit">Pretraži</button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				<hr/>
-				{gradovi.length
-					? gradovi.map(grad => 
-                    <div key={grad.idgrad}>
-                        {grad.nazivgrad}
+				{utakmice.length
+					? utakmice.map(utakmica => 
+                    <div key={utakmica.idutakmica}>
+                        {utakmica.nazivdomacin} - {utakmica.nazivgost} {utakmica.brgolovadomacin} : {utakmica.brgolovagost}
                         <br/>
-                        <Link to={"/admin/grad/" + grad.idgrad}>
-                            <button type="button">
-                                Pregledaj grad
-                            </button>
+                        <Link to={"/admin/utakmica/" + utakmica.idutakmica}>
+                            <Button type="button">
+                                Pregledaj utakmicu
+                            </Button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiGrad(grad.idgrad) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiGrad(utakmica.idutakmica) }}>
 							Izbriši
-						</button>
+						</Button>
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

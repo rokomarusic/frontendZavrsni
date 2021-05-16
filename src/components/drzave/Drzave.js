@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajDrzavu from './DodajDrzavu'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 class Drzave extends Component {
 	constructor(props) {
 		super(props)
@@ -64,7 +67,7 @@ class Drzave extends Component {
                 <DodajDrzavu/>
 				Drzave
 				<hr/>
-				<form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži države</h2>
 					<div>
               			<input
@@ -74,27 +77,28 @@ class Drzave extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži</button>
+							<Button type="submit">Pretraži</Button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				<hr/>
+				<ListGroup>
 				{drzave.length
 					? drzave.map(drzava => 
-                    <div key={drzava.iddrzava}>
+                    <ListGroup.Item variant="info" key={drzava.iddrzava}>
                         {drzava.nazivtim}
                         <br/>
                         <Link to={"/admin/drzava/" + drzava.idtim}>
-                            <button type="button">
+                            <Button variant="outline-primary" type="button">
                                 Pregledaj drzavu
-                            </button>
+                            </Button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
+						<Button variant="outline-danger" onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
 							Izbriši
-						</button>
-                    </div>)
-                : null}
+						</Button>
+                    </ListGroup.Item>)
+                : null} </ListGroup>
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}
 			</div>
 		)

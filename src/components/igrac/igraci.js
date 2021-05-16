@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajIgraca from './DodajIgraca'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 class Igraci extends Component {
 	constructor(props) {
 		super(props)
@@ -73,14 +75,14 @@ class Igraci extends Component {
                         {igrac.nadimakigrac ? igrac.nadimakigrac : igrac.imeigrac + " " + igrac.prezimeigrac}
                         <br/>
                         <Link to={"/admin/igrac/" + igrac.idigrac}>
-                            <button type="button">
+                            <Button type="button">
                                 Pregledaj igraca
-                            </button>
+                            </Button>
 							</Link>
 						<br/>
-						<button onClick={() => { this.izbrisiIgraca(igrac.idigrac) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiIgraca(igrac.idigrac) }}>
 							Izbriši
-						</button>
+						</Button>
                     </div>)
           : null}
         {errorMsg ? <div>{errorMsg}</div> : null}

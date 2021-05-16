@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import IzmjeniDrzavu from './IzmjeniDrzavu'
-
+import Button from 'react-bootstrap/Button'
 
 class DrzavaStranica extends Component {
 	constructor(props) {
@@ -43,21 +43,29 @@ class DrzavaStranica extends Component {
                 <h2>{fifakod}</h2>
                 <IzmjeniDrzavu id={idtim}/>
                 {errorMsg ? <div>{errorMsg}</div> : null}
+                <div>
                 <Link to={"/admin/gradovi/" + iddrzava +"/?drzava=" + nazivtim}>
-                    <button type="button">
+                    <Button variant="info" type="button">
                         Pregledaj gradove
-                    </button>
+                    </Button>
                 </Link>
+                </div>
+                <br/>
+                <div>
                 <Link to={"/admin/natjecanja/" + iddrzava +"/?drzava=" + nazivtim}>
-                    <button type="button">
+                    <Button variant="info" type="button">
                         Pregledaj natjecanja
-                    </button>
+                    </Button>
                 </Link>
+                </div>
+                <br/>
+                <div>
                 <Link to={"/admin/klubovi/" + iddrzava +"/?drzava=" + nazivtim}>
-                    <button type="button">
+                    <Button variant="info" type="button">
                         Pregledaj klubove
-                    </button>
+                    </Button>
                 </Link>
+                </div>
 			</div>
 		)
 	}

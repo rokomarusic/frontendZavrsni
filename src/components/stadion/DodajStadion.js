@@ -85,7 +85,7 @@ class DodajStadion extends Component {
             <br />
             <div>
               <input
-                type="text"
+                type="number"
                 name="kapacitet"
                 placeholder="kapacitet"
                 onChange={this.handleInputChange}

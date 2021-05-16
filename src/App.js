@@ -15,6 +15,10 @@ import DrzavaKlubovi from './components/drzave/DrzavaKlubovi';
 import KlubStranica from './components/klub/KlubStranica';
 import RosterStranica from './components/klub/RosterStranica'
 import NatjecanjeUtakmice from './components/natjecanje/NatjecanjeUtakmice';
+import UtakmicaStranica from './components/utakmica/UtakmicaStranica'
+
+import './App.css';  
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function setToken(userToken) {
   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -36,7 +40,7 @@ function App() {
 
   return (
     <Router>
-      <div className="container">
+      <div>
       <Navbar/>
       <br/>
       <Route path="/admin/igraci" exact component={Igraci} />
@@ -53,6 +57,7 @@ function App() {
       <Route path="/admin/klub/:id" component={KlubStranica} />
       <Route path="/admin/roster/:id" component={RosterStranica} />
       <Route path="/admin/utakmice/:id" component={NatjecanjeUtakmice}/>
+      <Route path="/admin/utakmica/:id" component={UtakmicaStranica}/>
       </div>
     </Router>
   );
