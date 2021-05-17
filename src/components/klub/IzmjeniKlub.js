@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Select from 'react-select'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 
 class IzmjeniKlub extends Component {
@@ -93,8 +95,8 @@ class IzmjeniKlub extends Component {
     return (
       <div>
         <div className="container">
-          <button type="button" onClick={this.toggleVisibility}>Izmjeni klub</button>
-          {this.state.visible && <form onSubmit={this.handleSubmit}>
+          <Button type="button" onClick={this.toggleVisibility}>Izmjeni klub</Button>
+          {this.state.visible && <Form onSubmit={this.handleSubmit}>
             <div>
               <input
                 type="text"
@@ -121,11 +123,11 @@ class IzmjeniKlub extends Component {
             </div>
             <br />
             <div>
-              <button className="btn btn-success" type="submit">
+              <Button className="btn btn-success" type="submit">
                 Izmjeni klub
-              </button>
+              </Button>
             </div>
-          </form>}
+          </Form>}
           <hr/>
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}

@@ -46,10 +46,12 @@ class DrzavaNatjecanja extends Component {
 		})
 	  }
 
+	  
+
 	render() {
 		const { natjecanja, errorMsg, naziv } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>{naziv}</h1>
 				<hr/>
                 <DodajNatjecanje iddrzava={this.props.match.params.id}/>

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajGrad from '../grad/DodajGrad'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 
 class DrzavaGradovi extends Component {
@@ -72,13 +74,12 @@ class DrzavaGradovi extends Component {
 	render() {
 		const { gradovi, errorMsg, naziv } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>{naziv}</h1>
 				<hr/>
                 <DodajGrad iddrzava={this.props.match.params.id}/>
-				Gradovi
 				<hr/>
-				<form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži gradove</h2>
 					<div>
               			<input
@@ -88,10 +89,10 @@ class DrzavaGradovi extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži gradove</button>
+							<Button type="submit">Pretraži gradove</Button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				<hr/>
 				{gradovi.length
 					? gradovi.map(grad => 
@@ -99,14 +100,14 @@ class DrzavaGradovi extends Component {
                         {grad.nazivgrad}
                         <br/>
                         <Link to={"/admin/grad/" + grad.idgrad}>
-                            <button type="button">
+                            <Button type="button">
                                 Pregledaj grad
-                            </button>
+                            </Button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiGrad(grad.idgrad) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiGrad(grad.idgrad) }}>
 							Izbriši
-						</button>
+						</Button>
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

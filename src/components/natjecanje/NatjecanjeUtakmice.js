@@ -60,20 +60,20 @@ class NatjecanjeUtakmice extends Component {
 		  });
 	  };
 
-	izbrisiGrad(id) {
+	izbrisiUtakmicu(id) {
 		console.log("unutar izbrisi za " + id)
-		axios.delete('http://localhost:3001/admin/grad/'+id)
+		axios.delete('http://localhost:3001/admin/utakmica/'+id)
 		  .then(response => { console.log(response.data)});
 	
 		this.setState({
-		  gradovi: this.state.gradoviBaza.filter(el => el.idgrad !== id)
+		  utakmice: this.state.utakmiceBaza.filter(el => el.idutakmica !== id)
 		})
 	  }
 
 	render() {
 		const { utakmice, errorMsg, naziv } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>{naziv}</h1>
 				<DodajUtakmicu idnatjecanje={this.props.match.params.id}/>
 				<Form onSubmit={this.handleSubmit}>
@@ -86,7 +86,7 @@ class NatjecanjeUtakmice extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži</button>
+							<Button type="submit">Pretraži</Button>
 						</div>
             		</div>
 				</Form>
@@ -102,7 +102,7 @@ class NatjecanjeUtakmice extends Component {
                             </Button>
                         </Link>
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiGrad(utakmica.idutakmica) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiUtakmicu(utakmica.idutakmica) }}>
 							Izbriši
 						</Button>
                     </div>)

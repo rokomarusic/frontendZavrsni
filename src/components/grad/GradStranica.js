@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import IzmjeniGrad from './IzmjeniGrad'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class GradStranica extends Component {
 	constructor(props) {
@@ -31,15 +33,15 @@ class GradStranica extends Component {
 	render() {
 		const { nazivgrad, errorMsg } = this.state
 		return (
-			<div>
+			<div className="container">
                 <h1>{nazivgrad}</h1>
 				<hr/>
 				<IzmjeniGrad id={this.props.match.params.id}/>
                 {errorMsg ? <div>{errorMsg}</div> : null}
 				<Link to={"/admin/stadioni/" + this.props.match.params.id +"/?grad=" + nazivgrad}>
-                    <button type="button">
+                    <Button type="button">
                         Pregledaj stadione
-                    </button>
+                    </Button>
                 </Link>
 			</div>
 		)

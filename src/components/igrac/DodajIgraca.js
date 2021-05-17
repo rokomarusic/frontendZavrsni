@@ -5,8 +5,11 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import hr from 'date-fns/locale/hr';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 registerLocale('hr', hr)
 setDefaultLocale('hr');
+
 
 const opcijeNoga = [
   {value:0, label:'desna'},
@@ -160,8 +163,8 @@ class DodajIgraca extends Component {
     return (
       <div>
         <div className="container">
-          <button type="button" onClick={this.toggleVisibility}>Dodaj igrača</button>
-          {this.state.visible && <form onSubmit={this.handleSubmit}>
+          <Button type="button" onClick={this.toggleVisibility}>Dodaj igrača</Button>
+          {this.state.visible && <Form onSubmit={this.handleSubmit}>
             <div>
               <input
                 type="text"
@@ -250,8 +253,7 @@ class DodajIgraca extends Component {
               </button>
             </div>
             
-          </form>}
-          <hr/>
+          </Form>}
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
       </div>

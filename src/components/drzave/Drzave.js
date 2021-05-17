@@ -62,7 +62,7 @@ class Drzave extends Component {
 	render() {
 		const { drzave, errorMsg } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h2>Dodaj novu državu</h2>
                 <DodajDrzavu/>
 				Drzave

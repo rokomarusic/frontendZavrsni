@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class IzmjeniStadion extends Component {
   constructor(props) {
@@ -73,10 +75,11 @@ class IzmjeniStadion extends Component {
   render() {
     return (
       <div>
-        <div className="container">
-          <button type="button" onClick={this.toggleVisibility}>Izmjeni stadion</button>
-          {this.state.visible && <form onSubmit={this.handleSubmit}>
+        <div>
+          <Button type="button" onClick={this.toggleVisibility}>Izmjeni stadion</Button>
+          {this.state.visible && <Form onSubmit={this.handleSubmit}>
             <div>
+              <br/>
               <input
                 type="text"
                 name="nazivstadion"
@@ -95,11 +98,11 @@ class IzmjeniStadion extends Component {
             </div>
             <br />
             <div>
-              <button className="btn btn-success" type="submit">
+              <Button className="btn btn-success" type="submit">
                 Izmjeni stadion
-              </button>
+              </Button>
             </div>
-          </form>}
+          </Form>}
           <hr/>
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}

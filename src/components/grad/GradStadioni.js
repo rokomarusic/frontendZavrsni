@@ -3,6 +3,9 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajStadion from '../stadion/DodajStadion'
 import IzmjeniStadion from '../stadion/IzmjeniStadion'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+
 class GradStadioni extends Component {
 	constructor(props) {
 		super(props)
@@ -64,13 +67,13 @@ class GradStadioni extends Component {
 	render() {
 		const { stadioni, errorMsg, naziv } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>{naziv}</h1>
 				<hr/>
 				<h1>Stadioni</h1>
                 <DodajStadion idgrad={this.props.match.params.id}/>
 				<hr/>
-				<form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži stadione</h2>
 					<div>
               			<input
@@ -80,19 +83,19 @@ class GradStadioni extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži stadione</button>
+							<Button type="submit">Pretraži stadione</Button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				<hr/>
 				{stadioni.length
 					? stadioni.map(stadion => 
                     <div key={stadion.idstadion}>
                         {stadion.nazivstadion}
 						<br/>
-						<button onClick={() => { this.izbrisiStadion(stadion.idstadion) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiStadion(stadion.idstadion) }}>
 							Izbriši
-						</button>
+						</Button>
                         <IzmjeniStadion idstadion={stadion.idstadion} idgrad={stadion.idgrad}/>
                     </div>)
                 : null}

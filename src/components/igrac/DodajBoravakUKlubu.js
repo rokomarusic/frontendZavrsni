@@ -5,6 +5,8 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from  "react-datepicker";
 import hr from 'date-fns/locale/hr';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 registerLocale('hr', hr)
 setDefaultLocale('hr');
 
@@ -129,8 +131,8 @@ class DodajBoravakUKlubu extends Component {
     return (
       <div>
         <div className="container">
-          <button type="button" onClick={this.toggleVisibility}>Dodaj boravak u klubu</button>
-          {this.state.visible && <form onSubmit={this.handleSubmit}>
+          <Button type="button" onClick={this.toggleVisibility}>Dodaj boravak u klubu</Button>
+          {this.state.visible && <Form onSubmit={this.handleSubmit}>
             <div>
             <DatePicker selected={this.state.datumodigrazaklub} 
                         onChange={date => this.setState({datumodigrazaklub: date})} 
@@ -162,12 +164,12 @@ class DodajBoravakUKlubu extends Component {
             </div>
             <br/>
             <div>
-              <button className="btn btn-success" type="submit">
+              <Button className="btn btn-success" type="submit">
                 Dodaj
-              </button>
+              </Button>
             </div>
             
-          </form>}
+          </Form>}
           <hr/>
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}

@@ -109,7 +109,7 @@ class DodajSudionika extends Component {
           <h3>Dodaj novog sudionika</h3>
           <form onSubmit={this.handleSubmit}>
             <div>
-            Klub:
+            Tim:
             <div>
               <Select onChange={this.handleSelectKlubChange}
                 options={this.state.kluboviOpcije}/>

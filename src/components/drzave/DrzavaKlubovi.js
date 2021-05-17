@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import DodajKlub from '../klub/DodajKlub'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 
 class DrzavaKlubovi extends Component {
@@ -68,13 +70,12 @@ class DrzavaKlubovi extends Component {
 	render() {
 		const { klubovi, errorMsg, naziv } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>{naziv}</h1>
 				<hr/>
                 <DodajKlub iddrzava={this.props.match.params.id}/>
-				Klubovi
 				<hr/>
-				<form onSubmit={this.handleSubmit}>
+				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži klubove</h2>
 					<div>
               			<input
@@ -84,10 +85,10 @@ class DrzavaKlubovi extends Component {
                 			onChange={this.handleInputChange}
               			/>
 						<div>
-							<button type="submit">Pretraži</button>
+							<Button type="submit">Pretraži</Button>
 						</div>
             		</div>
-				</form>
+				</Form>
 				<hr/>
 				{klubovi.length
 					? klubovi.map(klub => 
@@ -95,14 +96,14 @@ class DrzavaKlubovi extends Component {
                         {klub.nazivtim}
                         <br/>
                         <Link to={"/admin/klub/" + klub.idtim}>
-                            <button type="button">
+                            <Button type="button">
                                 Pregledaj klub
-                            </button>
+                            </Button>
                         </Link>
 						<br/>
-						<button onClick={() => { this.izbrisiKlub(klub.idtim) }}>
+						<Button variant="danger" onClick={() => { this.izbrisiKlub(klub.idtim) }}>
 							Izbriši
-						</button>
+						</Button>
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

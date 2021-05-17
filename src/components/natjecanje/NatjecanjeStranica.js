@@ -87,7 +87,7 @@ class NatjecanjeStranica extends Component {
 	render() {
 		const { nazivnatjecanje, godinasezona, sudionici, iddrzava, errorMsg } = this.state
 		return (
-			<div>
+			<div className="container">
                 <h1>{nazivnatjecanje} {godinasezona}</h1>
 				<hr/>
 				<h2>Sudionici</h2>
@@ -109,14 +109,17 @@ class NatjecanjeStranica extends Component {
 				{sudionici.length
 					? sudionici.map(sudionik => 
                     <div key={sudionik.idtim}>
+						<span>
                         {sudionik.nazivtim}
 						<br/>
 						<Button variant="danger" onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
 							Ukloni iz natjecanja
 						</Button>
+						</span>
+						<hr/>
                     </div>)
                 : null}
-
+				<hr/>
 				<Link to={"/admin/utakmice/" + this.props.match.params.id}>
                     <Button variant="info" type="button">
                         Pregledaj utakmice

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class IzmjeniDrzavu extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      visible: false,
       nazivtim: '',
       fifakod: '',
       errMsg: '',
@@ -53,11 +56,17 @@ class IzmjeniDrzavu extends Component {
       }
   };
 
+  toggleVisibility= () => {
+    this.setState({visible: !this.state.visible})
+    console.log("korner")
+}
+
   render() {
     return (
-      <div>
-        <div className="container">
-          <hr/>
+      <div className="container">
+        <hr/>
+        <Button onClick={this.toggleVisibility}>Izmjeni državu</Button>
+        {this.state.visible && <div>
           <h3>Izmjeni podatke o državi</h3>
           <form onSubmit={this.handleSubmit}>
             <div>
@@ -80,13 +89,13 @@ class IzmjeniDrzavu extends Component {
             <br />
             <div>
               <button className="btn btn-success" type="submit">
-                Izmjeni državu
+                Izmjeni
               </button>
             </div>
           </form>
-          <hr/>
-        </div>
+        </div>}
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
+        <hr/>
       </div>
     );
   }

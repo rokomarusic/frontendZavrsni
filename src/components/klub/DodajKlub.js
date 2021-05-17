@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Select from 'react-select'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class DodajKlub extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      visible: false,
       nazivklub: '',
       godosnutka: '',
       gradovi: [],
@@ -115,12 +118,17 @@ class DodajKlub extends Component {
       }
   };
 
+  toggleVisibility= () => {
+    this.setState({visible: !this.state.visible})
+}
+
   render() {
     return (
-      <div>
-        <div className="container">
+      <div className="container">
+        <Button onClick={this.toggleVisibility}>Dodaj natjecanje</Button>
+        {this.state.visible && <div>
             <h2>Dodaj klub</h2>
-          <form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
             <div>
               <input
                 type="text"
@@ -149,13 +157,12 @@ class DodajKlub extends Component {
             </div>
             <br />
             <div>
-              <button className="btn btn-success" type="submit">
+              <Button className="btn btn-success" type="submit">
                 Dodaj klub
-              </button>
+              </Button>
             </div>
-          </form>
-          <hr/>
-        </div>
+          </Form>
+        </div>}
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
       </div>
     );

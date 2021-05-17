@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class RosterStranica extends Component {
 	constructor(props) {
@@ -33,17 +35,18 @@ class RosterStranica extends Component {
 	render() {
 		const { igraci } = this.state
 		return (
-			<div>
-                Igraci
+			<div className="container">
+                <h2>Igrači</h2>
+				<br/>
 				{igraci.length
 					? igraci.map(igrac => 
                     <div key={igrac.idigrac}>
                         {igrac.nadimakigrac ? igrac.nadimakigrac : igrac.imeigrac + " " + igrac.prezimeigrac}
                         <br/>
                         <Link to={"/admin/igrac/" + igrac.idigrac}>
-                            <button type="button">
+                            <Button type="button">
                                 Pregledaj igraca
-                            </button>
+                            </Button>
                         </Link>
                     </div>)
           : null}

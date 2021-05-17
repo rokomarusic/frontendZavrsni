@@ -38,7 +38,7 @@ class DrzavaStranica extends Component {
 	render() {
 		const { nazivtim, fifakod, errorMsg, idtim, iddrzava } = this.state
 		return (
-			<div>
+			<div className="container">
                 <h1>{nazivtim}</h1>
                 <h2>{fifakod}</h2>
                 <IzmjeniDrzavu id={idtim}/>

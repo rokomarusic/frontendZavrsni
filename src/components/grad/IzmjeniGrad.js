@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 class IzmjeniGrad extends Component {
   constructor(props) {
@@ -57,9 +59,8 @@ class IzmjeniGrad extends Component {
     return (
       <div>
         <div className="container">
-          <hr/>
           <h3>Izmjeni podatke o gradu</h3>
-          <form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit}>
             <div>
               <input
                 type="text"
@@ -70,11 +71,11 @@ class IzmjeniGrad extends Component {
             </div>
             <br />
             <div>
-              <button className="btn btn-success" type="submit">
+              <Button className="btn btn-success" type="submit">
                 Izmjeni grad
-              </button>
+              </Button>
             </div>
-          </form>
+          </Form>
           <hr/>
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}

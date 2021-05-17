@@ -4,7 +4,8 @@ import IzmjeniIgraca from './IzmjeniIgraca';
 import IzmjeniBoravakUKlubu from './IzmjeniBoravakUKlubu';
 import DodajBoravakUKlubu from './DodajBoravakUKlubu';
 import { PieChart } from 'react-minimal-pie-chart';
-
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 //import {Link} from 'react-router-dom'
 
 
@@ -130,7 +131,7 @@ class IgracStranica extends Component {
 	render() {
 		const { igrac, klubovi, drzave, drzava, errorMsg, kluboviOpcije, sezone} = this.state
 		return (
-			<div>
+			<div className="container">
                 {igrac.nadimakigrac ? <h1>{igrac.nadimakigrac}</h1> : <h1>{igrac.imeigrac} {igrac.prezimeigrac}</h1>}
 				<h2>{igrac.pozicija}</h2>
                 {errorMsg ? <div>{errorMsg}</div> : null}
@@ -140,9 +141,11 @@ class IgracStranica extends Component {
 				<div key={klub.datumodigrazaklub}>
 					{klub.nazivtim} {klub.datumodigrazaklub} - {klub.datumdoigrazaklub ? klub.datumdoigrazaklub : " ?"}
 					<IzmjeniBoravakUKlubu igra_za_klub={klub} sezone={sezone} klubovi={kluboviOpcije} boravci={klubovi}/>
-					<button onClick={() => { this.izbrisiBoravak(klub) }}>
+					<div className="container">
+					<Button onClick={() => { this.izbrisiBoravak(klub) }} variant="danger">
 						Izbriši
-					</button>
+					</Button>
+					</div>
 					<hr/>
 				</div>) : null}
 				<h2>{drzava}</h2>

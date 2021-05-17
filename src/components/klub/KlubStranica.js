@@ -3,6 +3,8 @@ import axios from 'axios'
 import {Link} from 'react-router-dom'
 import IzmjeniKlub from './IzmjeniKlub'
 import Select from 'react-select'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 
 class KlubStranica extends Component {
@@ -110,7 +112,7 @@ class KlubStranica extends Component {
 	render() {
 		const { nazivtim, godosnutka, errorMsg, idtim, nazivgrad, options} = this.state
 		return (
-			<div>
+			<div className="container">
                 <h1>{nazivtim}</h1>
                 <h2>{nazivgrad}</h2>
                 {godosnutka? <h2>{godosnutka}</h2> : null}
@@ -124,9 +126,9 @@ class KlubStranica extends Component {
              		defaultValue={this.state.sezoneOptions[0]}/>
 				{this.state.showButton && 
 				<Link to={"/admin/roster/" + this.state.idklub +"/?sezona=" + this.state.sezona}>
-                    <button type="button">
+                    <Button type="button">
                             Pregledaj roster
-                    </button>
+                    </Button>
                 </Link>}
 			</div>
 		)

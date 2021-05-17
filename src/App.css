@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.color-nav{
+  background-color: #FFA500;
+}
+
+.nav-link {
+  color: white !important;
+  }

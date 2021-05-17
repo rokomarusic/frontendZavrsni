@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import DodajIgraca from './DodajIgraca'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+
 class Igraci extends Component {
 	constructor(props) {
 		super(props)
@@ -63,12 +64,11 @@ class Igraci extends Component {
 	render() {
 		const { igraci, errorMsg } = this.state
 		return (
-			<div>
+			<div className="container">
 				<h1>Igraci</h1>
 				<hr/>
 				<DodajIgraca drzave={this.state.drzave}/>
 				<hr/>
-				Igraci
 				{igraci.length
 					? igraci.map(igrac => 
                     <div key={igrac.idigrac}>
