@@ -6,6 +6,10 @@ import DodajPenal from './DodajPenal'
 import DodajKorner from './DodajKorner'
 import DodajUdarac from './DodajUdarac'
 import DodajSlobodanUdarac from './DodajSlobodanUdarac'
+import UtakmicaKorneri from './UtakmicaKorneri'
+import UtakmicaPenali from './UtakmicaPenali'
+import UtakmicaUdarci from './UtakmicaUdarci'
+import UtakmicaSlobodniUdarci from './UtakmicaSlobodniUdarci'
 class UtakmicaStranica extends Component {
 	constructor(props) {
 		super(props)
@@ -57,20 +61,27 @@ class UtakmicaStranica extends Component {
 				<hr/>
 				<div>
 				<DodajKorner utakmica={utakmica}/>
+				<br/>
+				<UtakmicaKorneri idutakmica={utakmica.idutakmica}/>
 				</div>
 				<br/>
 				<div>
 				<DodajPenal utakmica={utakmica}/>
+				<br/>
+				<UtakmicaPenali idutakmica={utakmica.idutakmica}/>
 				</div>
 				<br/>
 				<div>
 				<DodajUdarac utakmica={utakmica}/>
+				<br/>
+				<UtakmicaUdarci idutakmica={utakmica.idutakmica}/>
 				</div>
 				<br/>
 				<div>
 				<DodajSlobodanUdarac utakmica={utakmica}/>
-				</div>
 				<br/>
+				<UtakmicaSlobodniUdarci idutakmica={utakmica.idutakmica}/>
+				</div>
                 {errorMsg ? <div>{errorMsg}</div> : null}
 				</div>}
 			</div>

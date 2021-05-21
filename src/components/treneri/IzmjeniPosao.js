@@ -11,17 +11,17 @@ registerLocale('hr', hr)
 setDefaultLocale('hr');
 
 
-class IzmjeniBoravakUKlubu extends Component {
+class IzmjeniPosao extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.igrac)
+    console.log(this.props.trenira)
     this.state = {
       visible: false,
-      datumodigrazaklub: '',
-      datumdoigrazaklub: '',
-      klub: 0,
-      idklubprosli: this.props.igra_za_klub.idklub,
-      datumodigrazaklubprosli: this.props.igra_za_klub.datumodigrazaklub
+      datumodtrenira: '',
+      datumdotrenira: '',
+      tim: 0,
+      idtimprosli: this.props.trenira.idtim,
+      datumodtreniraprosli: this.props.trenira.datumodtrenira
     };
   }
 
@@ -36,8 +36,8 @@ class IzmjeniBoravakUKlubu extends Component {
     
 
     for(let i = 0; i < this.props.boravci.length; i++){
-        let date1 = new Date(this.props.boravci[i].datumodigrazaklub)
-        let date2 = new Date(this.props.boravci[i].datumdoigrazaklub)   
+        let date1 = new Date(this.props.boravci[i].datumodtrenira)
+        let date2 = new Date(this.props.boravci[i].datumdotrenira)   
 
         if(date1 < datumod &&
             date2 > datumod){
@@ -61,39 +61,42 @@ class IzmjeniBoravakUKlubu extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    let podaci = this.props.igra_za_klub
+    let podaci = this.props.trenira
 
 
-    podaci.idklubprosli = this.state.idklubprosli
-    podaci.datumodigrazaklubprosli = this.state.datumodigrazaklubprosli
+    podaci.idtimprosli = this.state.idtimprosli
+    podaci.datumodtreniraprosli = this.state.datumodtreniraprosli
 
     console.log("0000")
     console.log(this.props)
+    console.log("12341" + podaci.idtimprosli)
     console.log("0000")
 
-    if(this.state.datumodigrazaklub){
-      console.log(this.state.datumodigrazaklub)
-      podaci.datumodigrazaklub = this.add2Hours(this.state.datumodigrazaklub)
+    if(this.state.datumodtrenira){
+      console.log(this.state.datumodtrenira)
+      podaci.datumodtrenira = this.add2Hours(this.state.datumodtrenira)
     }
-    if(this.state.datumdoigrazaklub){
-      console.log(this.state.datumdoigrazaklub)
-      podaci.datumdoigrazaklub = this.add2Hours(this.state.datumdoigrazaklub)
+    if(this.state.datumdotrenira){
+      console.log(this.state.datumdotrenira)
+      podaci.datumdotrenira = this.add2Hours(this.state.datumdotrenira)
     }
 
-    if(podaci.datumdoigrazaklub !== null && podaci.datumodigrazaklub > podaci.datumdoigrazaklub){
-        this.setState({errMsg: 'Datum dolaska u klub mora biti manji od datuma odlaska'})
+    if(podaci.datumdotrenira !== null && podaci.datumodtrenira > podaci.datumdotrenira){
+        console.log(podaci.datumodtrenira)
+        console.log(podaci.datumdotrenira)
+        this.setState({errMsg: 'Datum dolaska u tim mora biti manji od datuma odlaska'})
         return;
     }
 
-    if(!this.provjeriBoravak(podaci.datumodigrazaklub, podaci.datumdoigrazaklub)){
+    if(!this.provjeriBoravak(podaci.datumodtrenira, podaci.datumdotrenira)){
         this.setState({errMsg: 'Novi boravak se preklapa sa starim boravcima'})
         return;
     }
 
-    if(this.state.klub > 0){
-        podaci.idklub = this.state.klub;
+    if(this.state.tim > 0){
+        podaci.idtim = this.state.tim;
     }else{
-      podaci.idklub = podaci.idklubprosli
+        podaci.idtim = podaci.idtimprosli;
     }
 
 
@@ -103,10 +106,10 @@ class IzmjeniBoravakUKlubu extends Component {
 
 
     axios
-      .post('http://localhost:3001/admin/izmjeniboravakuklubu/', podaci)
+      .post('http://localhost:3001/admin/izmjeniposao/', podaci)
       .then(() => {
         console.log("success!")
-        window.location = '/admin/igrac/' + podaci.idigrac
+        window.location = '/admin/trener/' + podaci.idtrener
       })
       .catch(err => {
         console.log(err)
@@ -124,44 +127,45 @@ class IzmjeniBoravakUKlubu extends Component {
 
   handleSelectKlubChange = (selectedOption) => {
       console.log("izabran id " + selectedOption.value)
-    this.setState({klub: selectedOption.value});
+    this.setState({tim: selectedOption.value});
   }
 
 
   render() {
     return (
       <div>
+        <Button type="button" onClick={this.toggleVisibility}>Izmjeni posao</Button>
         <div className="container">
-          <Button type="button" onClick={this.toggleVisibility}>Izmjeni boravak u klubu</Button>
           {this.state.visible && <Form onSubmit={this.handleSubmit}>
+            <br/>
             <div>
-            <DatePicker selected={this.state.datumodigrazaklub} 
-                        onChange={date => this.setState({datumodigrazaklub: date})} 
+            <DatePicker selected={this.state.datumodtrenira} 
+                        onChange={date => this.setState({datumodtrenira: date})} 
                         showMonthDropdown
                         showYearDropdown
                         locale="hr" 
                         dateFormat="dd/MM/yyyy"
                         dropdownMode="select"
-                        placeholderText="datum od kojeg igra za klub"
+                        placeholderText="datum od kojeg trenira tim"
                         minDate={new Date('1/1/2000')}
                         maxDate={new Date()}/>
                         
             </div>
             <br />
             <div>
-            <DatePicker selected={this.state.datumdoigrazaklub} 
-                        onChange={date => this.setState({datumdoigrazaklub: date})} 
+            <DatePicker selected={this.state.datumdotrenira} 
+                        onChange={date => this.setState({datumdotrenira: date})} 
                         showMonthDropdown
                         showYearDropdown
                         locale="hr" 
                         dateFormat="dd/MM/yyyy"
                         dropdownMode="select"
-                        placeholderText="datum do kojeg je igrao za klub"/>
+                        placeholderText="datum do kojeg je trenirao tim"/>
             </div>
-            Klub:
+            tim:
             <div>
               <Select onChange={this.handleSelectKlubChange}
-                options={this.props.klubovi}/>
+                options={this.props.timovi}/>
             </div>
             <br/>
             <div>
@@ -169,7 +173,7 @@ class IzmjeniBoravakUKlubu extends Component {
                 Izmjeni
               </Button>
             </div>
-            
+            <br/>
           </Form>}
         </div>
         {this.state.errMsg ? <div style={{color: "red"}}>{this.state.errMsg}</div> : null}
@@ -178,4 +182,4 @@ class IzmjeniBoravakUKlubu extends Component {
   }
 }
 
-export default IzmjeniBoravakUKlubu;
+export default IzmjeniPosao;

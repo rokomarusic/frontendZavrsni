@@ -23,6 +23,9 @@ export default class Navbar extends Component {
           <Link to="/admin/drzave" className="nav-link">Drzave</Link>
           </li>
           <li className="navbar-item">
+          <Link to="/admin/treneri" className="nav-link">Treneri</Link>
+          </li>
+          <li className="navbar-item">
             <Button variant="outline-danger" onClick={this.logout}>Logout</Button>
           </li>
         </ul>

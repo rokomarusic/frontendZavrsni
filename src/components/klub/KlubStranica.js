@@ -125,7 +125,7 @@ class KlubStranica extends Component {
               		options={this.state.sezoneOptions}
              		defaultValue={this.state.sezoneOptions[0]}/>
 				{this.state.showButton && 
-				<Link to={"/admin/roster/" + this.state.idklub +"/?sezona=" + this.state.sezona}>
+				<Link to={"/admin/roster/" + idtim +"/?sezona=" + this.state.sezona}>
                     <Button type="button">
                             Pregledaj roster
                     </Button>

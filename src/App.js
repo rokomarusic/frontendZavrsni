@@ -16,6 +16,8 @@ import KlubStranica from './components/klub/KlubStranica';
 import RosterStranica from './components/klub/RosterStranica'
 import NatjecanjeUtakmice from './components/natjecanje/NatjecanjeUtakmice';
 import UtakmicaStranica from './components/utakmica/UtakmicaStranica'
+import Treneri from './components/treneri/Treneri'
+import TrenerStranica from './components/treneri/TrenerStranica'
 
 import './App.css';  
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -58,6 +60,8 @@ function App() {
       <Route path="/admin/roster/:id" component={RosterStranica} />
       <Route path="/admin/utakmice/:id" component={NatjecanjeUtakmice}/>
       <Route path="/admin/utakmica/:id" component={UtakmicaStranica}/>
+      <Route path="/admin/treneri" component={Treneri}/>
+      <Route path="/admin/trener/:id" component={TrenerStranica}/>
       </div>
     </Router>
   );

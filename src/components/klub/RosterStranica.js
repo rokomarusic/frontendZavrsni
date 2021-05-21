@@ -9,6 +9,7 @@ class RosterStranica extends Component {
 		super(props)
 	    this.state = {
             igraci: '',
+			treneri: '',
             errorMsg: '',
 		}
 	}
@@ -30,12 +31,41 @@ class RosterStranica extends Component {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
+
+
+		axios
+			.get('http://localhost:3001/admin/trenerisezona/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ treneri: response.data})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
 	}
 
 	render() {
-		const { igraci } = this.state
+		const { igraci, treneri } = this.state
 		return (
 			<div className="container">
+				<h2>Treneri</h2>
+				<br/>
+				{treneri.length
+					? treneri.map(trener => 
+                    <div key={trener.idtrener}>
+                        {trener.nadimaktrener ? trener.nadimaktrener : trener.imetrener + " " + trener.prezimetrener}
+                        <br/>
+                        <Link to={"/admin/trener/" + trener.idtrener}>
+                            <Button type="button">
+                                Pregledaj trenera
+                            </Button>
+                        </Link>
+                    </div>)
+          : null}
+		  		<hr/>
+		  		<br/>
                 <h2>Igrači</h2>
 				<br/>
 				{igraci.length
