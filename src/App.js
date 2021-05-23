@@ -1,7 +1,7 @@
 import Igraci from './components/igrac/igraci';
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route} from "react-router-dom";
-import Navbar from './components/navbar.component'
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import NavbarAdmin from './components/navbar.component'
 import IgracStranica from './components/igrac/igracStranica'
 import Drzave from './components/drzave/Drzave'
 import DrzavaStranica from './components/drzave/DrzavaStranica'
@@ -18,13 +18,11 @@ import NatjecanjeUtakmice from './components/natjecanje/NatjecanjeUtakmice';
 import UtakmicaStranica from './components/utakmica/UtakmicaStranica'
 import Treneri from './components/treneri/Treneri'
 import TrenerStranica from './components/treneri/TrenerStranica'
+import HomePage from './components/HomePage'
 
 import './App.css';  
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
 
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
@@ -36,33 +34,36 @@ function App() {
 
   const token = getToken();
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
+  /*if(!token) {
+    return <Login/>
+  }*/
 
   return (
     <Router>
+      <Switch>
       <div>
-      <Navbar/>
+      {token ? <NavbarAdmin/> : null}
       <br/>
-      <Route path="/admin/igraci" exact component={Igraci} />
+      <Route path="/" exact component={HomePage} />
+      <Route path="/admin/igraci" exact component={token ? Igraci : Login} />
       <Route path="/login" exact component={Login} />
-      <Route path="/admin/drzave" exact component={Drzave} />
-      <Route path="/admin/drzava/:id" component={DrzavaStranica} />
-      <Route path="/admin/gradovi/:id" component={DrzavaGradovi} />
-      <Route path="/admin/natjecanja/:id" component={DrzavaNatjecanja} />
-      <Route path="/admin/igrac/:id" component={IgracStranica} />
-      <Route path="/admin/grad/:id" component={GradStranica} />
-      <Route path="/admin/stadioni/:id" component={GradStadioni} />
-      <Route path="/admin/natjecanje/:id" component={NatjecanjeStranica} />
-      <Route path="/admin/klubovi/:id" component={DrzavaKlubovi} />
-      <Route path="/admin/klub/:id" component={KlubStranica} />
-      <Route path="/admin/roster/:id" component={RosterStranica} />
-      <Route path="/admin/utakmice/:id" component={NatjecanjeUtakmice}/>
-      <Route path="/admin/utakmica/:id" component={UtakmicaStranica}/>
-      <Route path="/admin/treneri" component={Treneri}/>
-      <Route path="/admin/trener/:id" component={TrenerStranica}/>
+      <Route path="/admin/drzave" exact component={token ? Drzave : Login} />
+      <Route path="/admin/drzava/:id" component={token ? DrzavaStranica : Login} />
+      <Route path="/admin/gradovi/:id" component={token ? DrzavaGradovi : Login} />
+      <Route path="/admin/natjecanja/:id" component={token ? DrzavaNatjecanja : Login} />
+      <Route path="/admin/igrac/:id" component={token ? IgracStranica : Login} />
+      <Route path="/admin/grad/:id" component={token ? GradStranica : Login} />
+      <Route path="/admin/stadioni/:id" component={token ? GradStadioni : Login} />
+      <Route path="/admin/natjecanje/:id" component={token ? NatjecanjeStranica : Login} />
+      <Route path="/admin/klubovi/:id" component={token ? DrzavaKlubovi : Login} />
+      <Route path="/admin/klub/:id" component={token ? KlubStranica : Login} />
+      <Route path="/admin/roster/:id" component={token ? RosterStranica : Login} />
+      <Route path="/admin/utakmice/:id" component={token ? NatjecanjeUtakmice : Login}/>
+      <Route path="/admin/utakmica/:id" component={token ? UtakmicaStranica : Login}/>
+      <Route path="/admin/treneri" component={token ? Treneri : Login}/>
+      <Route path="/admin/trener/:id" component={token ? TrenerStranica : Login}/>
       </div>
+      </Switch>
     </Router>
   );
 }

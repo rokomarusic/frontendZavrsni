@@ -1,8 +1,11 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
-const Login = ({setToken}) => {
+
+const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
@@ -40,10 +43,15 @@ const Login = ({setToken}) => {
         
         
       }
+
+      function setToken(userToken) {
+        sessionStorage.setItem('token', JSON.stringify(userToken));
+      }
+      
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <label>
                     <p>username</p>
                     <input type="text" value={username} onChange={e => setUserName(e.target.value)}/>
@@ -54,15 +62,15 @@ const Login = ({setToken}) => {
                 </label>
                 {error ? <div style={{color: "red"}}>Login nije uspio!</div> : null}
                 <div>
-                    <button type="submit">Login</button>
+                    <Button type="submit">Login</Button>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }
 
 export default Login
 
-Login.propTypes = {
+/*Login.propTypes = {
     setToken: PropTypes.func.isRequired
-}
+}*/

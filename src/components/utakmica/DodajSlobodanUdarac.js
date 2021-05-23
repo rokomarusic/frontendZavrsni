@@ -58,10 +58,10 @@ class DodajSlobodanUdarac extends Component {
                 temp[i] = {value:"", label:""}
                 temp[i].value = igraciBaza[i].idigrac
                 if(igraciBaza[i].nadimakigrac){
-                    temp[i].label = igraciBaza[i].nadimakigrac
-                }else{
-                    temp[i].label = igraciBaza[i].imeigrac + " " + igraciBaza[i].prezimeigrac
-                }
+                  temp[i].label = igraciBaza[i].nadimakigrac + ((igraciBaza[i].pozicija === 'GK') ? " (GK)" : "")
+              }else{
+                  temp[i].label = igraciBaza[i].imeigrac + " " + igraciBaza[i].prezimeigrac + ((igraciBaza[i].pozicija === 'GK') ? " (GK)" : "")
+              }
                 console.log(i + " " + temp[i].value + temp[i].label)
             
         }

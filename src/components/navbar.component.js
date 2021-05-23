@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import '../App.css'
 
-export default class Navbar extends Component {
+export default class NavbarAdmin extends Component {
 
   logout = () => {
     sessionStorage.removeItem('token');
