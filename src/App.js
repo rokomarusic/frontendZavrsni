@@ -21,6 +21,7 @@ import Treneri from './components/treneri/Treneri'
 import TrenerStranica from './components/treneri/TrenerStranica'
 import HomePage from './components/HomePage'
 import IgracStatistika from './components/igrac/IgracStatistika'
+import GolmanStatistika from './components/igrac/GolmanStatistika'
 
 import './App.css';  
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -48,6 +49,7 @@ function App() {
       <br/>
       <Route path="/" exact component={HomePage} />
       <Route path="/igrac/:id" exact component={IgracStatistika} />
+      <Route path="/golman/:id" exact component={GolmanStatistika} />
       <Route path="/admin/igraci" exact component={token ? Igraci : Login} />
       <Route path="/login" exact component={Login} />
       <Route path="/admin/drzave" exact component={token ? Drzave : Login} />

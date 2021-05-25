@@ -37,6 +37,7 @@ class IgracStatistika extends Component {
 			preciznostudaraca:0,
 			preciznostkornera: 0,
 			avgudaljenostudarac: 0,
+			avgudaljenostslobodni: 0,
 			godinasezona: null,
 			options:[]
 		}
@@ -140,11 +141,11 @@ class IgracStatistika extends Component {
 				let straneIgracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracpenal === 0){
-						straneIgracStats.lijevo++;
+						straneIgracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracpenal === 1){
-						straneIgracStats.sredina++;
+						straneIgracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracStats.desno++;
+						straneIgracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -164,11 +165,11 @@ class IgracStatistika extends Component {
 				let straneIgracSlobodniStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracslobodni === 0){
-						straneIgracSlobodniStats.lijevo++;
+						straneIgracSlobodniStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracslobodni === 1){
-						straneIgracSlobodniStats.sredina++;
+						straneIgracSlobodniStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracSlobodniStats.desno++;
+						straneIgracSlobodniStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -189,11 +190,11 @@ class IgracStatistika extends Component {
 				let straneIgracUdaracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracudarac === 0){
-						straneIgracUdaracStats.lijevo++;
+						straneIgracUdaracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracudarac === 1){
-						straneIgracUdaracStats.sredina++;
+						straneIgracUdaracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracUdaracStats.desno++;
+						straneIgracUdaracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -211,9 +212,9 @@ class IgracStatistika extends Component {
 				let visineIgracStats = {dolje: 0, gore: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].visinaigracpenal === 0){
-						visineIgracStats.dolje++;
+						visineIgracStats.dolje += parseInt(response.data[i].count)
 					}else{
-						visineIgracStats.gore++;
+						visineIgracStats.gore += parseInt(response.data[i].count)
 					}
 				}
 
@@ -229,7 +230,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostpenala: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostpenala: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -241,7 +242,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostkornera: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostkornera: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -253,7 +254,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostslobodni: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostslobodni: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -264,8 +265,8 @@ class IgracStatistika extends Component {
 			.get('http://localhost:3001/igracpreciznostudaraca/?igrac=' + id)
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
-
-				this.setState({ preciznostudaraca: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				console.log("PRECISION " +  ((Math.round(preciznost  * 100)).toString() + "%"))
+				this.setState({ preciznostudaraca:  ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -279,7 +280,20 @@ class IgracStatistika extends Component {
 				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
 				console.log("AVGIST")
 				console.log(response.data)
-				this.setState({ avgudaljenostudarac: (Number(parseFloat(distance).toFixed(2))).toString() + " m"});
+				this.setState({ avgudaljenostudarac: ((Math.round(distance)).toString() + " m ")});
+			})
+			.catch(error => {
+		console.log(error)
+		this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+		axios
+			.get('http://localhost:3001/udaljenostslobodni/?igrac=' + id)
+			.then(response => {
+				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
+				console.log("AVGIST")
+				console.log(response.data)
+				this.setState({ avgudaljenostslobodni: ((Math.round(distance)).toString() + " m ")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -293,9 +307,9 @@ class IgracStatistika extends Component {
 				let pokrivenUdaracStats = {pokriven: 0, nijepokriven: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].igracpokriven === 0){
-						pokrivenUdaracStats.nijepokriven++;
+						pokrivenUdaracStats.nijepokriven += parseInt(response.data[i].count)
 					}else{
-						pokrivenUdaracStats.pokriven++;
+						pokrivenUdaracStats.pokriven += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -316,11 +330,11 @@ class IgracStatistika extends Component {
 				let stativaKornerStats = {prva: 0, druga:0, kratki: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stativa === 0){
-						stativaKornerStats.prva++;
+						stativaKornerStats.prva += parseInt(response.data[i].count)
 					}else if(response.data[i].stativa === 1){
-						stativaKornerStats.druga++;
+						stativaKornerStats.druga += parseInt(response.data[i].count)
 					}else{
-						stativaKornerStats.kratki++;
+						stativaKornerStats.kratki += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -341,9 +355,9 @@ class IgracStatistika extends Component {
 				let izborenDrugiKornerStats = {izboren: 0, nijeizboren:0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].izborendrugikorner === 0){
-						izborenDrugiKornerStats.nijeizboren++;
+						izborenDrugiKornerStats.nijeizboren += parseInt(response.data[i].count)
 					}else{
-						izborenDrugiKornerStats.izboren++;
+						izborenDrugiKornerStats.izboren += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -363,9 +377,9 @@ class IgracStatistika extends Component {
 				let pogodiozivizid =  {pogodio: 0, nijepogodio: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].pogodiozivizid === 0){
-						pogodiozivizid.nijepogodio++;
+						pogodiozivizid.nijepogodio += parseInt(response.data[i].count)
 					}else{
-						pogodiozivizid.pogodio++;
+						pogodiozivizid.pogodio += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -395,11 +409,11 @@ class IgracStatistika extends Component {
 				let straneIgracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracpenal === 0){
-						straneIgracStats.lijevo++;
+						straneIgracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracpenal === 1){
-						straneIgracStats.sredina++;
+						straneIgracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracStats.desno++;
+						straneIgracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -419,11 +433,11 @@ class IgracStatistika extends Component {
 				let straneIgracSlobodniStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracslobodni === 0){
-						straneIgracSlobodniStats.lijevo++;
+						straneIgracSlobodniStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracslobodni === 1){
-						straneIgracSlobodniStats.sredina++;
+						straneIgracSlobodniStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracSlobodniStats.desno++;
+						straneIgracSlobodniStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -444,11 +458,11 @@ class IgracStatistika extends Component {
 				let straneIgracUdaracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracudarac === 0){
-						straneIgracUdaracStats.lijevo++;
+						straneIgracUdaracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracudarac === 1){
-						straneIgracUdaracStats.sredina++;
+						straneIgracUdaracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracUdaracStats.desno++;
+						straneIgracUdaracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -466,9 +480,9 @@ class IgracStatistika extends Component {
 				let visineIgracStats = {dolje: 0, gore: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].visinaigracpenal === 0){
-						visineIgracStats.dolje++;
+						visineIgracStats.dolje += parseInt(response.data[i].count)
 					}else{
-						visineIgracStats.gore++;
+						visineIgracStats.gore += parseInt(response.data[i].count)
 					}
 				}
 
@@ -484,7 +498,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostpenala: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostpenala: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -496,7 +510,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostkornera: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostkornera: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -508,7 +522,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostslobodni: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostslobodni: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -521,7 +535,7 @@ class IgracStatistika extends Component {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 				console.log("PREC  " + preciznost)
 
-				this.setState({ preciznostudaraca: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostudaraca: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -535,12 +549,25 @@ class IgracStatistika extends Component {
 				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
 				console.log("AVGIST")
 				console.log(response.data)
-				this.setState({ avgudaljenostudarac: (Number(parseFloat(distance).toFixed(2))).toString() + " m"});
+				this.setState({ avgudaljenostudarac: ((Math.round(distance)).toString() + " m")});
 			})
 			.catch(error => {
 		console.log(error)
 		this.setState({errorMsg: 'Error retrieving data'})
 			})
+
+		axios
+			.get('http://localhost:3001/udaljenostslobodni/?igrac=' + id)
+			.then(response => {
+				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
+				console.log("AVGIST")
+				console.log(response.data)
+				this.setState({ avgudaljenostslobodni: ((Math.round(distance)).toString() + " m ")});
+			})
+			.catch(error => {
+		console.log(error)
+		this.setState({errorMsg: 'Error retrieving data'})
+			})	
 
 		axios
 			.get('http://localhost:3001/igracudaracpokriven/?igrac=' + id)
@@ -549,9 +576,9 @@ class IgracStatistika extends Component {
 				let pokrivenUdaracStats = {pokriven: 0, nijepokriven: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].igracpokriven === 0){
-						pokrivenUdaracStats.nijepokriven++;
+						pokrivenUdaracStats.nijepokriven += parseInt(response.data[i].count)
 					}else{
-						pokrivenUdaracStats.pokriven++;
+						pokrivenUdaracStats.pokriven += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -572,11 +599,11 @@ class IgracStatistika extends Component {
 				let stativaKornerStats = {prva: 0, druga:0, kratki: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stativa === 0){
-						stativaKornerStats.prva++;
+						stativaKornerStats.prva += parseInt(response.data[i].count)
 					}else if(response.data[i].stativa === 1){
-						stativaKornerStats.druga++;
+						stativaKornerStats.druga += parseInt(response.data[i].count)
 					}else{
-						stativaKornerStats.kratki++;
+						stativaKornerStats.kratki += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -597,9 +624,9 @@ class IgracStatistika extends Component {
 				let izborenDrugiKornerStats = {izboren: 0, nijeizboren:0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].izborendrugikorner === 0){
-						izborenDrugiKornerStats.nijeizboren++;
+						izborenDrugiKornerStats.nijeizboren += parseInt(response.data[i].count)
 					}else{
-						izborenDrugiKornerStats.izboren++;
+						izborenDrugiKornerStats.izboren += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -619,9 +646,9 @@ class IgracStatistika extends Component {
 				let pogodiozivizid =  {pogodio: 0, nijepogodio: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].pogodiozivizid === 0){
-						pogodiozivizid.nijepogodio++;
+						pogodiozivizid.nijepogodio += parseInt(response.data[i].count)
 					}else{
-						pogodiozivizid.pogodio++;
+						pogodiozivizid.pogodio += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -640,11 +667,11 @@ class IgracStatistika extends Component {
 				let straneIgracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracpenal === 0){
-						straneIgracStats.lijevo++;
+						straneIgracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracpenal === 1){
-						straneIgracStats.sredina++;
+						straneIgracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracStats.desno++;
+						straneIgracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -664,11 +691,11 @@ class IgracStatistika extends Component {
 				let straneIgracSlobodniStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracslobodni === 0){
-						straneIgracSlobodniStats.lijevo++;
+						straneIgracSlobodniStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracslobodni === 1){
-						straneIgracSlobodniStats.sredina++;
+						straneIgracSlobodniStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracSlobodniStats.desno++;
+						straneIgracSlobodniStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -689,11 +716,11 @@ class IgracStatistika extends Component {
 				let straneIgracUdaracStats = {lijevo: 0, sredina: 0, desno: 0 }
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].stranaigracudarac === 0){
-						straneIgracUdaracStats.lijevo++;
+						straneIgracUdaracStats.lijevo += parseInt(response.data[i].count)
 					}else if(response.data[i].stranaigracudarac === 1){
-						straneIgracUdaracStats.sredina++;
+						straneIgracUdaracStats.sredina += parseInt(response.data[i].count)
 					}else{
-						straneIgracUdaracStats.desno++;
+						straneIgracUdaracStats.desno += parseInt(response.data[i].count)
 					}
 				}
 
@@ -711,9 +738,9 @@ class IgracStatistika extends Component {
 				let visineIgracStats = {dolje: 0, gore: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].visinaigracpenal === 0){
-						visineIgracStats.dolje++;
+						visineIgracStats.dolje += parseInt(response.data[i].count)
 					}else{
-						visineIgracStats.gore++;
+						visineIgracStats.gore += parseInt(response.data[i].count)
 					}
 				}
 
@@ -729,7 +756,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostpenala: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostpenala: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -740,7 +767,7 @@ class IgracStatistika extends Component {
 			.get('http://localhost:3001/igracpreciznostkornersezona/?igrac=' + id +'&sezona=' + this.state.godinasezona)
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
-				this.setState({ preciznostkornera: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostkornera: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -752,7 +779,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 
-				this.setState({ preciznostslobodni: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostslobodni: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -764,7 +791,7 @@ class IgracStatistika extends Component {
 			.then(response => {
 				let preciznost = response.data[0] && response.data[0].preciznost ? response.data[0].preciznost : 0
 				console.log("PREC SEZONA " + preciznost)
-				this.setState({ preciznostudaraca: (Number((preciznost).toFixed(2)) * 100).toString() + "%"});
+				this.setState({ preciznostudaraca: ((Math.round(preciznost  * 100)).toString() + "%")});
 			})
 			.catch(error => {
 		console.log(error)
@@ -778,12 +805,26 @@ class IgracStatistika extends Component {
 				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
 				console.log("AVGISTSEZONA")
 				console.log(response.data)
-				this.setState({ avgudaljenostudarac: (Number(parseFloat(distance).toFixed(2))).toString() + " m"});
+				this.setState({ avgudaljenostudarac: ((Math.round(distance)).toString() + " m")});
 			})
 			.catch(error => {
 		console.log(error)
 		this.setState({errorMsg: 'Error retrieving data'})
 			})
+
+		axios
+			.get('http://localhost:3001/udaljenostslobodnisezona/?igrac=' + id +'&sezona=' + this.state.godinasezona)
+			.then(response => {
+				let distance = response.data[0] && response.data[0].avgdist ? response.data[0].avgdist : 0
+				console.log("AVGIST")
+				console.log(response.data)
+				this.setState({ avgudaljenostslobodni: ((Math.round(distance)).toString() + " m ")});
+			})
+			.catch(error => {
+		console.log(error)
+		this.setState({errorMsg: 'Error retrieving data'})
+			})	
+
 
 		axios
 			.get('http://localhost:3001/igracudaracpokrivensezona/?igrac=' + id +'&sezona=' + this.state.godinasezona)
@@ -792,9 +833,9 @@ class IgracStatistika extends Component {
 				let pokrivenUdaracStats = {pokriven: 0, nijepokriven: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].igracpokriven === 0){
-						pokrivenUdaracStats.nijepokriven++;
+						pokrivenUdaracStats.nijepokriven += parseInt(response.data[i].count)
 					}else{
-						pokrivenUdaracStats.pokriven++;
+						pokrivenUdaracStats.pokriven += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -817,9 +858,9 @@ class IgracStatistika extends Component {
 					if(response.data[i].stativa === 0){
 						stativaKornerStats.prva++;
 					}else if(response.data[i].stativa === 1){
-						stativaKornerStats.druga++;
+						stativaKornerStats.druga += parseInt(response.data[i].count)
 					}else{
-						stativaKornerStats.kratki++;
+						stativaKornerStats.kratki += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -840,9 +881,9 @@ class IgracStatistika extends Component {
 				let izborenDrugiKornerStats = {izboren: 0, nijeizboren:0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].izborendrugikorner === 0){
-						izborenDrugiKornerStats.nijeizboren++;
+						izborenDrugiKornerStats.nijeizboren += parseInt(response.data[i].count)
 					}else{
-						izborenDrugiKornerStats.izboren++;
+						izborenDrugiKornerStats.izboren += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -862,9 +903,9 @@ class IgracStatistika extends Component {
 				let pogodiozivizid =  {pogodio: 0, nijepogodio: 0}
 				for(let i = 0; i < response.data.length; i++){
 					if(response.data[i].pogodiozivizid === 0){
-						pogodiozivizid.nijepogodio++;
+						pogodiozivizid.nijepogodio += parseInt(response.data[i].count)
 					}else{
-						pogodiozivizid.pogodio++;
+						pogodiozivizid.pogodio += parseInt(response.data[i].count)
 					}
 				}
 				console.log("UDARCI ")
@@ -1048,7 +1089,7 @@ class IgracStatistika extends Component {
 				</div>
 				<div>
 				<h2>Slobodni udarci</h2>
-				Preciznost: {this.state.preciznostslobodni}  Prosječna udaljenost: {this.state.avgudaljenostudarac}
+				Preciznost: {this.state.preciznostslobodni}  Prosječna udaljenost: {this.state.avgudaljenostslobodni}
                 <Box display="flex" p={1}>
                 <Card style={{ width: '18rem' }}>
                 <Card.Body>
