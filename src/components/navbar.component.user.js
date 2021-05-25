@@ -12,6 +12,21 @@ export default class NavbarUser extends Component {
         <Link to="/" className="navbar-brand">FootStats</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
+        <li className="navbar-item">
+            <Link to="/pretraziigrace" className="nav-link">
+              <Button variant="outline-dark" type="button">Pretraži igrače</Button>
+            </Link>
+        </li>
+        <li className="navbar-item">
+            <Link to="/pretraziklubove" className="nav-link">
+              <Button variant="outline-dark" type="button">Pretraži klubove</Button>
+            </Link>
+        </li>
+        <li className="navbar-item">
+            <Link to="/pretrazidrzave" className="nav-link">
+              <Button variant="outline-dark" type="button">Pretraži države</Button>
+            </Link>
+        </li>
           <li className="navbar-item">
           <Link to="/login" className="nav-link">
             <Button variant="outline-success" type="button">Log in</Button>

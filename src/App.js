@@ -22,9 +22,14 @@ import TrenerStranica from './components/treneri/TrenerStranica'
 import HomePage from './components/HomePage'
 import IgracStatistika from './components/igrac/IgracStatistika'
 import GolmanStatistika from './components/igrac/GolmanStatistika'
+import PretraziIgrace from './components/PretraziIgrace'
+import PretraziDrzave from './components/PretraziDrzave'
+import PretraziKlubove from './components/PretraziKlubove'
 
 import './App.css';  
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DrzavaStatistika from './components/drzave/DrzavaStatistika';
+import KlubStatistika from './components/klub/KlubStatistika';
 
 
 function getToken() {
@@ -37,10 +42,6 @@ function App() {
 
   const token = getToken();
 
-  /*if(!token) {
-    return <Login/>
-  }*/
-
   return (
     <Router>
       <Switch>
@@ -49,6 +50,11 @@ function App() {
       <br/>
       <Route path="/" exact component={HomePage} />
       <Route path="/igrac/:id" exact component={IgracStatistika} />
+      <Route path="/drzava/:id" exact component={DrzavaStatistika} />
+      <Route path="/klub/:id" exact component={KlubStatistika} />
+      <Route path="/pretraziigrace" exact component={PretraziIgrace} />
+      <Route path="/pretrazidrzave" exact component={PretraziDrzave} />
+      <Route path="/pretraziklubove" exact component={PretraziKlubove} />
       <Route path="/golman/:id" exact component={GolmanStatistika} />
       <Route path="/admin/igraci" exact component={token ? Igraci : Login} />
       <Route path="/login" exact component={Login} />

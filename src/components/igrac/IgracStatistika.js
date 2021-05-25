@@ -8,6 +8,18 @@ import Card from 'react-bootstrap/Card'
 import Box from '@material-ui/core/Box';
 import Select from 'react-select'
 
+import Paper from '@material-ui/core/Paper';
+import {
+  Chart,
+  BarSeries,
+  Title,
+  ArgumentAxis,
+  ValueAxis,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
+
+
+
 
 //import {Link} from 'react-router-dom'
 
@@ -39,7 +51,8 @@ class IgracStatistika extends Component {
 			avgudaljenostudarac: 0,
 			avgudaljenostslobodni: 0,
 			godinasezona: null,
-			options:[]
+			options:[],
+			goloviposezonama:[]
 		}
 	}
 
@@ -150,6 +163,23 @@ class IgracStatistika extends Component {
 				}
 
 				this.setState({straneIgracStats: straneIgracStats})
+
+			})
+			.catch(error => {
+        		console.log(error)
+        		this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+		axios
+			.get('http://localhost:3001/goloviposezonama/?igrac=' + id)
+			.then(response => {
+				console.log("GOLOVI PO SEZONAMA")
+				console.log(response.data)
+				let temp = []
+				for(let i = 0; i < response.data.length; i++){
+					temp[i] = {godinasezona : response.data[i].godinasezona.toString(), count: parseInt(response.data[i].count)}
+				}
+				this.setState({goloviposezonama: temp})
 
 			})
 			.catch(error => {
@@ -396,12 +426,10 @@ class IgracStatistika extends Component {
 
 	handleSelectSezonaChange = (selectedOption) => {
         this.setState({godinasezona: selectedOption.value});
-		console.log("SELEKTID OPŠN " + selectedOption.value)
     }
 
 	showData = () => {
 		let id = this.props.match.params.id
-		console.log("showin data")
 		if(this.state.godinasezona === null || this.state.godinasezona === -1){
 			axios
 			.get('http://localhost:3001/igracstranepenala/?igrac=' + id)
@@ -1131,6 +1159,22 @@ class IgracStatistika extends Component {
                 </Card.Body>
                 </Card>
                 </Box>
+				{this.state.goloviposezonama && <Paper>
+					<Chart
+					data={this.state.goloviposezonama}
+					>
+					<ArgumentAxis />
+					<ValueAxis max={20} />
+
+					<BarSeries
+						valueField="count"
+						argumentField="godinasezona"
+						barWidth={1}
+					/>
+					<Title text="Broj golova igrača po sezoni" />
+					<Animation />
+					</Chart>
+				</Paper>}
 				</div>
 			</div>
 		)
