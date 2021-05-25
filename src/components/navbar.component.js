@@ -13,7 +13,7 @@ export default class NavbarAdmin extends Component {
   render() {
     return (
       <nav className="navbar color-nav navbar-expand-lg">
-        <Link to="/" className="navbar-brand">Admin page</Link>
+        <Link to="/" className="navbar-brand">FootStats</Link>
         <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="navbar-item">

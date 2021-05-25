@@ -49,18 +49,20 @@ const Login = () => {
       }
       
     return (
-        <div>
+        <div className="container">
             <h1>Login</h1>
             <Form onSubmit={handleSubmit}>
                 <label>
                     <p>username</p>
                     <input type="text" value={username} onChange={e => setUserName(e.target.value)}/>
                 </label>
+                <br/>
                 <label>
                     <p>password</p>
                     <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 </label>
                 {error ? <div style={{color: "red"}}>Login nije uspio!</div> : null}
+                <br/>
                 <div>
                     <Button type="submit">Login</Button>
                 </div>

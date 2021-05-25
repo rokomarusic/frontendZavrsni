@@ -154,15 +154,6 @@ class IgracStranica extends Component {
 				Preferirana noga: {igrac.jacanoga === 0 ? 'desna' : (igrac.jacanoga === 1 ? 'lijeva' : 'obje')}
 				<hr/>
 				<IzmjeniIgraca igrac={igrac} drzave={drzave}/>
-				<PieChart
-					data={[
-						{ title: 'One', value: 10, color: '#000000' },
-						{ title: 'Two', value: 10, color: '#C13C37' },
-						{ title: 'Three', value: 10, color: '#6A2135' },
-					]}
-					radius={10}
-					totalValue={30}
-				/>;
 			</div>
 		)
 	}

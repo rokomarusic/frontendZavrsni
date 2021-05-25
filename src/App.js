@@ -2,6 +2,7 @@ import Igraci from './components/igrac/igraci';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import NavbarAdmin from './components/navbar.component'
+import NavbarUser from './components/navbar.component.user'
 import IgracStranica from './components/igrac/igracStranica'
 import Drzave from './components/drzave/Drzave'
 import DrzavaStranica from './components/drzave/DrzavaStranica'
@@ -19,6 +20,7 @@ import UtakmicaStranica from './components/utakmica/UtakmicaStranica'
 import Treneri from './components/treneri/Treneri'
 import TrenerStranica from './components/treneri/TrenerStranica'
 import HomePage from './components/HomePage'
+import IgracStatistika from './components/igrac/IgracStatistika'
 
 import './App.css';  
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -42,9 +44,10 @@ function App() {
     <Router>
       <Switch>
       <div>
-      {token ? <NavbarAdmin/> : null}
+      {token ? <NavbarAdmin/> : <NavbarUser/>}
       <br/>
       <Route path="/" exact component={HomePage} />
+      <Route path="/igrac/:id" exact component={IgracStatistika} />
       <Route path="/admin/igraci" exact component={token ? Igraci : Login} />
       <Route path="/login" exact component={Login} />
       <Route path="/admin/drzave" exact component={token ? Drzave : Login} />
