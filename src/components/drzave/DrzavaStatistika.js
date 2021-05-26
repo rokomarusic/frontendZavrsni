@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import NajboljiStrijelciTima from '../igrac/NajboljiStrijelciTima'
+import DrzavaDogadaji from './DrzavaDogadaji'
 
 class DrzavaStatistika extends Component {
 	constructor(props) {
@@ -15,6 +16,10 @@ class DrzavaStatistika extends Component {
             errorMsg: '',
             id: null,
             sezona:null,
+            drzava:null,
+            brgolovadoma: null,
+            brgolovagost: null,
+            posjecenost: null,
 		}
 	}
 
@@ -26,12 +31,25 @@ class DrzavaStatistika extends Component {
         console.log("SEZONA " + sezona)
         this.setState({id: id})
         this.setState({sezona: sezona})
-		axios
+
+        axios
 			.get('http://localhost:3001/drzavaroster/' + id + "/?sezona=" + sezona)
 			.then(response => {
                 console.log("OVDJE IGRACI REPKE")
 				console.log(response)
 				this.setState({ igraci: response.data})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+		})
+
+		axios
+			.get('http://localhost:3001/admin/drzava/' + id)
+			.then(response => {
+                console.log("OVDJE IGRACI REPKE")
+				console.log(response)
+				this.setState({ drzava: response.data})
 			})
 			.catch(error => {
         console.log(error)
@@ -50,12 +68,54 @@ class DrzavaStatistika extends Component {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
+            axios
+			.get('http://localhost:3001/brgolovadomasezona/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ brgolovadoma: response.data.sum})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+        axios
+			.get('http://localhost:3001/brgolovagostsezona/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ brgolovagost: response.data.sum})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+        axios
+			.get('http://localhost:3001/avgposjecenost/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ posjecenost: response.data.avg})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
 	}
 
 	render() {
-		const { igraci, treneri } = this.state
+		const { igraci, treneri, drzava } = this.state
 		return (
 			<div className="container">
+                {drzava && <h1>{drzava.nazivtim}</h1>}
+                {drzava && <h2>{drzava.fifakod}</h2>}
+                <hr/>
+                {this.state.brgolovadoma && <p>Broj golova doma u sezoni: {this.state.brgolovadoma}</p>}
+                {this.state.brgolovagost && <p>Broj golova u gostima u sezoni: {this.state.brgolovagost}</p>}
+                {this.state.posjecenost && <p>Prosječna posjećenost na utakmicama: {Math.round(this.state.posjecenost)}</p>}
+                <hr/>
 				<h2>Treneri</h2>
 				<br/>
 				{treneri.length
@@ -100,7 +160,8 @@ class DrzavaStatistika extends Component {
                 </tbody>
           </Table>
           {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona}/>}
-			</div>
+          {this.state.drzava && <DrzavaDogadaji idtim={this.state.drzava.idtim} iddrzava={this.state.drzava.iddrzava} sezona={this.state.sezona}/> }
+            </div>
 		)
 	}
 }

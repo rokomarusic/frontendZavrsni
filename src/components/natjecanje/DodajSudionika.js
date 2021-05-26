@@ -84,17 +84,15 @@ class DodajSudionika extends Component {
 
     axios
       .post('http://localhost:3001/admin/dodajsudionika/',  sudionik)
-      .then(() => console.log('Dodan sudionik'))
+      .then(() => {
+        window.location = '/admin/natjecanje/' + idnatjecanje;
+      })
       .catch(err => {
         console.log(err)
         this.setState({
           errMsg: 'Greška pri dodavanju sudionika',
         });
       });
-      
-      if(!this.state.errMsg){
-        window.location = '/admin/natjecanje/' + idnatjecanje;
-      }
   };
 
   handleSelectKlubChange = (selectedOption) => {

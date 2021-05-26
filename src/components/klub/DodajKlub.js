@@ -125,7 +125,7 @@ class DodajKlub extends Component {
   render() {
     return (
       <div className="container">
-        <Button onClick={this.toggleVisibility}>Dodaj natjecanje</Button>
+        <Button onClick={this.toggleVisibility}>Dodaj klub</Button>
         {this.state.visible && <div>
             <h2>Dodaj klub</h2>
           <Form onSubmit={this.handleSubmit}>

@@ -1070,6 +1070,7 @@ class IgracStatistika extends Component {
                 </Box>
 				</div>
 				</Box>
+				<Box display="flex" p={1}>
 				<div>
 				<h2>Korneri</h2>
 				Efiksanost: {this.state.preciznostkornera}
@@ -1159,6 +1160,8 @@ class IgracStatistika extends Component {
                 </Card.Body>
                 </Card>
                 </Box>
+				</div>
+				</Box>
 				{this.state.goloviposezonama && <Paper>
 					<Chart
 					data={this.state.goloviposezonama}
@@ -1175,7 +1178,6 @@ class IgracStatistika extends Component {
 					<Animation />
 					</Chart>
 				</Paper>}
-				</div>
 			</div>
 		)
 

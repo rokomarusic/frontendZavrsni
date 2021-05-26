@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
 import NajboljiStrijelciTima from '../igrac/NajboljiStrijelciTima'
+import KlubDogadaji from './KlubDogadaji'
 
 class KlubStatistika extends Component {
 	constructor(props) {
@@ -16,6 +17,9 @@ class KlubStatistika extends Component {
             id: null,
             sezona:null,
             klub: null,
+            brgolovadoma: null,
+            brgolovagost: null,
+            posjecenost: null,
 		}
 	}
 
@@ -62,6 +66,42 @@ class KlubStatistika extends Component {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
+
+        axios
+			.get('http://localhost:3001/brgolovadomasezona/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ brgolovadoma: response.data.sum})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+        axios
+			.get('http://localhost:3001/brgolovagostsezona/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ brgolovagost: response.data.sum})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
+
+        axios
+			.get('http://localhost:3001/avgposjecenost/' + id + "/?sezona=" + sezona)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ posjecenost: response.data.avg})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
 	}
 
 	render() {
@@ -73,6 +113,10 @@ class KlubStatistika extends Component {
                 <h2>{klub.nazivgrad}</h2>
                 {klub.godosnutka? <h2>{klub.godosnutka}</h2> : null}
                 </div>}
+                <hr/>
+                {this.state.brgolovadoma && <p>Broj golova doma u sezoni: {this.state.brgolovadoma}</p>}
+                {this.state.brgolovagost && <p>Broj golova u gostima u sezoni: {this.state.brgolovagost}</p>}
+                {this.state.posjecenost && <p>Prosječna posjećenost na utakmicama: {Math.round(this.state.posjecenost)}</p>}
                 <hr/>
 				<h3>Treneri</h3>
 				<br/>
@@ -103,7 +147,7 @@ class KlubStatistika extends Component {
                 </thead>
                 <tbody>
                     {igraci.map(igrac => 
-                    <tr>
+                    <tr key={igrac.idigrac}>
                         <td>{igrac.nadimakigrac ? igrac.nadimakigrac : igrac.imeigrac + " " + igrac.prezimeigrac}</td>
                         <td>{igrac.pozicija}</td>
                         <td>{igrac.dob}</td>
@@ -118,7 +162,8 @@ class KlubStatistika extends Component {
                 </tbody>
           </Table>
           {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona}/>}
-			</div>
+        {klub && <KlubDogadaji idtim={klub.idtim} idklub={klub.idklub} sezona={this.state.sezona}/> }
+        </div>
 		)
 	}
 }

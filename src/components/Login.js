@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form'
 const Login = () => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [authlevel, setAuthLevel] = useState('');
     const [error, setError] = useState(false);
 
     const handleSubmit = async e => {
@@ -15,7 +16,8 @@ const Login = () => {
 
         const user = {
             username,
-            password
+            password,
+            authlevel
         }
 
 
@@ -28,8 +30,8 @@ const Login = () => {
                 setUserName('');
                 setPassword('');
             }else{
-                console.log(res.data);
-                setToken(user);
+                console.log("REZ DEJTA")
+                setToken(res.data);
                 console.log("check");
                 window.location = '/admin/drzave'
             }
