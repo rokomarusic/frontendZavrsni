@@ -19,6 +19,12 @@ class DrzavaKlubovi extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
         console.log(this.props.match.params);
         let id = this.props.match.params.id
@@ -72,8 +78,10 @@ class DrzavaKlubovi extends Component {
 		return (
 			<div className="container">
 				<h1>{naziv}</h1>
+				{this.isSuperAdmin() ? <div>
 				<hr/>
                 <DodajKlub iddrzava={this.props.match.params.id}/>
+				</div>:null}
 				<hr/>
 				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži klubove</h2>
@@ -101,9 +109,9 @@ class DrzavaKlubovi extends Component {
                             </Button>
                         </Link>
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiKlub(klub.idtim) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiKlub(klub.idtim) }}>
 							Izbriši
-						</Button>
+						</Button> : null}
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

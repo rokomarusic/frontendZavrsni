@@ -1,22 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import IzmjeniIgraca from './IzmjeniIgraca';
-import IzmjeniBoravakUKlubu from './IzmjeniBoravakUKlubu';
-import DodajBoravakUKlubu from './DodajBoravakUKlubu';
-import { PieChart } from 'react-minimal-pie-chart';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 //import {Link} from 'react-router-dom'
 
 
-class IgracStranica extends Component {
+class TrenerPodaci extends Component {
 	constructor(props) {
 		super(props)
 	    this.state = {
             ime: '',
-            igrac: '',
-			klubovi: '',
-			kluboviOpcije: [],
+            trener: '',
+			boravci:[],
 			drzave:[],
 			drzava: '',
 			sezone: []
@@ -25,7 +20,7 @@ class IgracStranica extends Component {
 
 	getDrzava(){
 		for(let i = 0; i < this.state.drzave.length; i++){
-			if(this.state.drzave[i].value === this.state.igrac.iddrzava){
+			if(this.state.drzave[i].value === this.state.trener.iddrzava){
 				this.setState({drzava: this.state.drzave[i].label});
 				return;
 			}
@@ -38,17 +33,28 @@ class IgracStranica extends Component {
         let id = this.props.match.params.id
         console.log("ID " + id)
 		axios
-			.get('http://localhost:3001/admin/igrac/' + id)
+			.get('http://localhost:3001/admin/trener/' + id)
 			.then(response => {
 				console.log(response)
-				this.setState({ igrac: response.data })
+				this.setState({ trener: response.data })
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
+		
+		axios
+			.get('http://localhost:3001/admin/trenerboravci/' + id)
+			.then(response => {
+				console.log(response)
+				this.setState({ boravci: response.data })
 			})
 			.catch(error => {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
 
-		axios
+		/*axios
 			.get('http://localhost:3001/admin/igracklubovi/' + id)
 			.then(response => {
 				console.log(response)
@@ -92,17 +98,17 @@ class IgracStranica extends Component {
 			.catch(error => {
 		console.log(error)
 		this.setState({errorMsg: 'Error retrieving data'})
-			})
+			})*/
 		
 		axios
-			.get('http://localhost:3001/admin/sviklubovi')
+			.get('http://localhost:3001/admin/timovi')
 			.then(response => {
 				console.log(response)
 				let temp = []
 				let kluboviBaza = response.data
 				for(let i = 0; i < kluboviBaza.length; i++){
 					temp[i] = {value:"", label:""}
-					temp[i].value = kluboviBaza[i].idklub
+					temp[i].value = kluboviBaza[i].idtim
 					temp[i].label = kluboviBaza[i].nazivtim
 					console.log(i + " " + temp[i].value + temp[i].label)
 				}
@@ -118,51 +124,36 @@ class IgracStranica extends Component {
 
 	izbrisiBoravak(boravak) {
 		console.log(boravak)
-		axios.post('http://localhost:3001/admin/boravakuklubu/', boravak)
+		axios.post('http://localhost:3001/admin/izbrisiposao/', boravak)
 		  .then(response => { console.log(response.data)});
 	
 		this.setState({
-		  klubovi: this.state.klubovi.filter(el => el.idklub !== boravak.idklub
-			|| el.idigrac !== boravak.idigrac
-			|| el.datumodigrazaklub !== boravak.datumodigrazaklub)
+		  boravci: this.state.boravci.filter(el => el.idtim !== boravak.idtim
+			|| el.idtrener !== boravak.idtrener
+			|| el.datumodtrenira !== boravak.datumodtrenira)
 		})
 	  }
 
-	  isSuperAdmin() {
-		const tokenString = sessionStorage.getItem('token');
-		const userToken = JSON.parse(tokenString);
-		return userToken.authlevel === 1;
-	  }
 
 	render() {
-		const { igrac, klubovi, drzave, drzava, errorMsg, kluboviOpcije, sezone} = this.state
+		const { trener, errorMsg, boravci, kluboviOpcije} = this.state
 		return (
 			<div className="container">
-                {igrac.nadimakigrac ? <h1>{igrac.nadimakigrac}</h1> : <h1>{igrac.imeigrac} {igrac.prezimeigrac}</h1>}
-				<h2>{igrac.pozicija}</h2>
-                {errorMsg ? <div>{errorMsg}</div> : null}
+                {trener.nadimaktrener ? <h1>{trener.nadimaktrener}</h1> : <h1>{trener.imetrener} {trener.prezimetrener}</h1>}
+				<h2>{trener.nazivtim}</h2>
+				Datum rođenja: {trener.datumrodenjatrener}
 				<hr/>
-				{this.isSuperAdmin() ? <DodajBoravakUKlubu sezone={sezone} klubovi={kluboviOpcije} idigrac={igrac.idigrac} boravci={klubovi}/> : null}
-				{klubovi.length ? klubovi.map(klub => 
-				<div key={klub.datumodigrazaklub}>
-					{klub.nazivtim} {klub.datumodigrazaklub} - {klub.datumdoigrazaklub ? klub.datumdoigrazaklub : " ?"}
-					{this.isSuperAdmin() ? <IzmjeniBoravakUKlubu igra_za_klub={klub} sezone={sezone} klubovi={kluboviOpcije} boravci={klubovi}/> : null}
-					<div className="container">
-					{this.isSuperAdmin() ? <Button onClick={() => { this.izbrisiBoravak(klub) }} variant="danger">
-						Izbriši
-					</Button> : null}
-					</div>
+				<h2>Poslovi</h2>
+				<hr/>
+				{boravci.length ? boravci.map(klub => 
+				<div key={klub.datumodtrenira}>
+					{klub.nazivtim} {klub.datumodtrenira} - {klub.datumdotrenira? klub.datumdotrenira : " ?"}
 					<hr/>
 				</div>) : null}
-				<h2>{drzava}</h2>
-				Datum rođenja: {igrac.datumrodenjaigrac}
-				<br/>
-				Preferirana noga: {igrac.jacanoga === 0 ? 'desna' : (igrac.jacanoga === 1 ? 'lijeva' : 'obje')}
-				<hr/>
-				{this.isSuperAdmin() ? <IzmjeniIgraca igrac={igrac} drzave={drzave}/> : null}
+				{errorMsg ? <div>{errorMsg}</div> : null}
 			</div>
 		)
 	}
 }
 
-export default IgracStranica
+export default TrenerPodaci

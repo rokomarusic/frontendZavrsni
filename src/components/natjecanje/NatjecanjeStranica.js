@@ -84,6 +84,12 @@ class NatjecanjeStranica extends Component {
 
 	  };
 
+	  isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	render() {
 		const { nazivnatjecanje, godinasezona, sudionici, iddrzava, errorMsg } = this.state
 		return (
@@ -91,7 +97,7 @@ class NatjecanjeStranica extends Component {
                 <h1>{nazivnatjecanje} {godinasezona}</h1>
 				<hr/>
 				<h2>Sudionici</h2>
-				<DodajSudionika idnatjecanje={this.props.match.params.id}/>
+				{this.isSuperAdmin() ? <DodajSudionika idnatjecanje={this.props.match.params.id}/> : null}
 				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži sudionike</h2>
 					<div>
@@ -110,11 +116,17 @@ class NatjecanjeStranica extends Component {
 					? sudionici.map(sudionik => 
                     <div key={sudionik.idtim}>
 						<span>
-                        {sudionik.nazivtim}
+						{sudionik.nazivtim}
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
+                        <Link to={"/admin/klub/" + sudionik.idtim}>
+                            <Button type="button">
+                                Pregledaj klub
+                            </Button>
+                        </Link>
+						<br/>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
 							Ukloni iz natjecanja
-						</Button>
+						</Button> : null}
 						</span>
 						<hr/>
                     </div>)

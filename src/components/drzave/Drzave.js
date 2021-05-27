@@ -17,6 +17,12 @@ class Drzave extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
 		axios
 			.get('http://localhost:3001/admin/drzave')
@@ -29,6 +35,7 @@ class Drzave extends Component {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
+		console.log("IS SUPER ADMIN " + this.isSuperAdmin())
 	}
 
 	handleInputChange = e => {
@@ -63,9 +70,11 @@ class Drzave extends Component {
 		const { drzave, errorMsg } = this.state
 		return (
 			<div className="container">
+				{this.isSuperAdmin() ? <div>
 				<h2>Dodaj novu državu</h2>
                 <DodajDrzavu/>
-				Drzave
+				</div>: null}
+				<h2>Drzave</h2>
 				<hr/>
 				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži države</h2>
@@ -94,9 +103,9 @@ class Drzave extends Component {
                             </Button>
                         </Link>
 						<br/>
-						<Button variant="outline-danger" onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
+						{this.isSuperAdmin() ? <Button variant="outline-danger" onClick={() => { this.izbrisiDrzavu(drzava.idtim) }}>
 							Izbriši
-						</Button>
+						</Button> : null}
                     </ListGroup.Item>)
                 : null} </ListGroup>
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

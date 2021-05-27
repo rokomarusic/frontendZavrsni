@@ -106,10 +106,10 @@ class DrzavaStatistika extends Component {
 	}
 
 	render() {
-		const { igraci, treneri, drzava } = this.state
+		const { igraci, treneri, drzava, sezona } = this.state
 		return (
 			<div className="container">
-                {drzava && <h1>{drzava.nazivtim}</h1>}
+                {drzava && <h1>{drzava.nazivtim} {sezona}</h1>}
                 {drzava && <h2>{drzava.fifakod}</h2>}
                 <hr/>
                 {this.state.brgolovadoma && <p>Broj golova doma u sezoni: {this.state.brgolovadoma}</p>}
@@ -123,7 +123,7 @@ class DrzavaStatistika extends Component {
                     <div key={trener.idtrener}>
                         {trener.nadimaktrener ? trener.nadimaktrener : trener.imetrener + " " + trener.prezimetrener}
                         <br/>
-                        <Link to={"/admin/trener/" + trener.idtrener}>
+                        <Link to={"/trener/" + trener.idtrener}>
                             <Button type="button">
                                 Pregledaj trenera
                             </Button>

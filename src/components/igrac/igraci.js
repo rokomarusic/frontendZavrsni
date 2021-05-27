@@ -61,14 +61,22 @@ class Igraci extends Component {
 		})
 	  }
 
+	  isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	render() {
 		const { igraci, errorMsg } = this.state
 		return (
 			<div className="container">
 				<h1>Igraci</h1>
+				{this.isSuperAdmin() ? <div>
 				<hr/>
 				<DodajIgraca drzave={this.state.drzave}/>
 				<hr/>
+				</div>:null}
 				{igraci.length
 					? igraci.map(igrac => 
                     <div key={igrac.idigrac}>
@@ -80,9 +88,9 @@ class Igraci extends Component {
                             </Button>
 							</Link>
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiIgraca(igrac.idigrac) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiIgraca(igrac.idigrac) }}>
 							Izbriši
-						</Button>
+						</Button> : null}
                     </div>)
           : null}
         {errorMsg ? <div>{errorMsg}</div> : null}

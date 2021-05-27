@@ -14,6 +14,12 @@ class GradStranica extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
         console.log(this.props.match.params);
         let id = this.props.match.params.id
@@ -36,7 +42,7 @@ class GradStranica extends Component {
 			<div className="container">
                 <h1>{nazivgrad}</h1>
 				<hr/>
-				<IzmjeniGrad id={this.props.match.params.id}/>
+				{this.isSuperAdmin() ? <IzmjeniGrad id={this.props.match.params.id}/> : null}
                 {errorMsg ? <div>{errorMsg}</div> : null}
 				<Link to={"/admin/stadioni/" + this.props.match.params.id +"/?grad=" + nazivgrad}>
                     <Button type="button">

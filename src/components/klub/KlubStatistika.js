@@ -20,6 +20,7 @@ class KlubStatistika extends Component {
             brgolovadoma: null,
             brgolovagost: null,
             posjecenost: null,
+            stadion: null,
 		}
 	}
 
@@ -102,15 +103,28 @@ class KlubStatistika extends Component {
         console.log(error)
         this.setState({errorMsg: 'Error retrieving data'})
 			})
+
+        axios
+			.get('http://localhost:3001/stadiontim/' + id)
+			.then(response => {
+				console.log("treneri ovdje")
+				console.log(response)
+				this.setState({ stadion: response.data.nazivstadion})
+			})
+			.catch(error => {
+        console.log(error)
+        this.setState({errorMsg: 'Error retrieving data'})
+			})
 	}
 
 	render() {
-		const { igraci, treneri, klub } = this.state
+		const { igraci, treneri, klub, stadion } = this.state
 		return (
 			<div className="container">
                 {klub &&<div>
                 <h1>{klub.nazivtim} {this.state.sezona}</h1>
                 <h2>{klub.nazivgrad}</h2>
+                <h2>Stadion: {stadion ? stadion : ''}</h2>
                 {klub.godosnutka? <h2>{klub.godosnutka}</h2> : null}
                 </div>}
                 <hr/>
@@ -125,7 +139,7 @@ class KlubStatistika extends Component {
                     <div key={trener.idtrener}>
                         {trener.nadimaktrener ? trener.nadimaktrener : trener.imetrener + " " + trener.prezimetrener}
                         <br/>
-                        <Link to={"/admin/trener/" + trener.idtrener}>
+                        <Link to={"/trener/" + trener.idtrener}>
                             <Button type="button">
                                 Pregledaj trenera
                             </Button>

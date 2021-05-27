@@ -17,6 +17,12 @@ class DrzavaNatjecanja extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
         console.log(this.props.match.params);
         let id = this.props.match.params.id
@@ -54,7 +60,7 @@ class DrzavaNatjecanja extends Component {
 			<div className="container">
 				<h1>{naziv}</h1>
 				<hr/>
-                <DodajNatjecanje iddrzava={this.props.match.params.id}/>
+                {this.isSuperAdmin() ? <DodajNatjecanje iddrzava={this.props.match.params.id}/> : null}
 				Natjecanja
 				{natjecanja.length
 					? natjecanja.map(natjecanje => 
@@ -69,9 +75,9 @@ class DrzavaNatjecanja extends Component {
                         </Link>
 						</div>
 						<div>
-						<Button variant="danger" onClick={() => { this.izbrisiNatjecanje(natjecanje.idnatjecanje) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiNatjecanje(natjecanje.idnatjecanje) }}>
 							Izbriši
-						</Button>
+						</Button> : null }
 						</div>
 						<br/>
                     </div>)

@@ -16,6 +16,12 @@ class DrzavaStranica extends Component {
 		}
 	}
 
+    isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
         console.log(this.props);
         let id = this.props.match.params.id
@@ -41,7 +47,7 @@ class DrzavaStranica extends Component {
 			<div className="container">
                 <h1>{nazivtim}</h1>
                 <h2>{fifakod}</h2>
-                <IzmjeniDrzavu id={idtim}/>
+                {this.isSuperAdmin() ? <IzmjeniDrzavu id={idtim}/> : null}
                 {errorMsg ? <div>{errorMsg}</div> : null}
                 <div>
                 <Link to={"/admin/gradovi/" + iddrzava +"/?drzava=" + nazivtim}>

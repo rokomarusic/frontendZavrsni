@@ -19,6 +19,12 @@ class DrzavaGradovi extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	async getRequest(id){
 		await axios
 			.get('http://localhost:3001/admin/gradovi/' + id)
@@ -76,9 +82,11 @@ class DrzavaGradovi extends Component {
 		return (
 			<div className="container">
 				<h1>{naziv}</h1>
+				{this.isSuperAdmin() ? <div>
 				<hr/>
                 <DodajGrad iddrzava={this.props.match.params.id}/>
 				<hr/>
+				</div>:null}
 				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži gradove</h2>
 					<div>
@@ -105,9 +113,9 @@ class DrzavaGradovi extends Component {
                             </Button>
                         </Link>
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiGrad(grad.idgrad) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiGrad(grad.idgrad) }}>
 							Izbriši
-						</Button>
+						</Button> : null}
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

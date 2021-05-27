@@ -108,6 +108,12 @@ class KlubStranica extends Component {
 		this.setState({showButton: true})
 	  }
 
+	  isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 
 	render() {
 		const { nazivtim, godosnutka, errorMsg, idtim, nazivgrad, options} = this.state
@@ -116,7 +122,7 @@ class KlubStranica extends Component {
                 <h1>{nazivtim}</h1>
                 <h2>{nazivgrad}</h2>
                 {godosnutka? <h2>{godosnutka}</h2> : null}
-				<IzmjeniKlub id={idtim} gradovi={options}/>
+				{this.isSuperAdmin() ? <IzmjeniKlub id={idtim} gradovi={options}/> : null}
                 {errorMsg ? <div>{errorMsg}</div> : null}
 
 				<hr/>

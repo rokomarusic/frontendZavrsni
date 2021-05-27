@@ -18,6 +18,12 @@ class GradStadioni extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
         console.log(this.props.match.params);
         let id = this.props.match.params.id
@@ -71,7 +77,7 @@ class GradStadioni extends Component {
 				<h1>{naziv}</h1>
 				<hr/>
 				<h1>Stadioni</h1>
-                <DodajStadion idgrad={this.props.match.params.id}/>
+                {this.isSuperAdmin() ? <DodajStadion idgrad={this.props.match.params.id}/> : null}
 				<hr/>
 				<Form onSubmit={this.handleSubmit}>
 					<h2>Pretraži stadione</h2>
@@ -93,10 +99,10 @@ class GradStadioni extends Component {
                     <div key={stadion.idstadion}>
                         {stadion.nazivstadion}
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiStadion(stadion.idstadion) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiStadion(stadion.idstadion) }}>
 							Izbriši
-						</Button>
-                        <IzmjeniStadion idstadion={stadion.idstadion} idgrad={stadion.idgrad}/>
+						</Button> : null}
+                        {this.isSuperAdmin() ? <IzmjeniStadion idstadion={stadion.idstadion} idgrad={stadion.idgrad}/> : null}
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

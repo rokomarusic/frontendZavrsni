@@ -16,6 +16,12 @@ class Treneri extends Component {
 		}
 	}
 
+	isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	componentDidMount() {
 		axios
 			.get('http://localhost:3001/admin/treneri')
@@ -69,9 +75,11 @@ class Treneri extends Component {
 			<div className="container">
 				{treneri && <div>
 				<h1>treneri</h1>
+				{this.isSuperAdmin() ? <div>
 				<hr/>
 				<DodajTrenera drzave={drzave}/>
 				<hr/>
+				</div> : null}
 				{treneri.length
 					? treneri.map(trener => 
                     <div key={trener.idtrener}>
@@ -83,9 +91,9 @@ class Treneri extends Component {
                             </Button>
 							</Link>
 						<br/>
-						<Button variant="danger" onClick={() => { this.izbrisiTrenera(trener.idtrener) }}>
+						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiTrenera(trener.idtrener) }}>
 							Izbriši
-						</Button>
+						</Button> : null}
                     </div>)
           : null}
 		  </div>}

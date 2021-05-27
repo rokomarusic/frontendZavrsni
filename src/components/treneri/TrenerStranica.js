@@ -137,29 +137,37 @@ class TrenerStranica extends Component {
 		})
 	  }
 
+	  isSuperAdmin() {
+		const tokenString = sessionStorage.getItem('token');
+		const userToken = JSON.parse(tokenString);
+		return userToken.authlevel === 1;
+	  }
+
 	render() {
 		const { trener, errorMsg, boravci, kluboviOpcije} = this.state
 		return (
 			<div className="container">
                 {trener.nadimaktrener ? <h1>{trener.nadimaktrener}</h1> : <h1>{trener.imetrener} {trener.prezimetrener}</h1>}
 				<h2>{trener.nazivtim}</h2>
+				{this.isSuperAdmin() ? <div>
 				<hr/>
 				<IzmjeniTrenera trener={trener}/>
 				<hr/>
+				</div> : null}
 				Datum rođenja: {trener.datumrodenjatrener}
 				<hr/>
 				<h2>Poslovi</h2>
-				<DodajPosao timovi={kluboviOpcije} idtrener={trener.idtrener} boravci={boravci}/>
+				{this.isSuperAdmin() ? <DodajPosao timovi={kluboviOpcije} idtrener={trener.idtrener} boravci={boravci}/> :null}
 				<hr/>
 				{boravci.length ? boravci.map(klub => 
 				<div key={klub.datumodtrenira}>
 					{klub.nazivtim} {klub.datumodtrenira} - {klub.datumdotrenira? klub.datumdotrenira : " ?"}
-					<div>
+					{this.isSuperAdmin() ? <div>
 					<IzmjeniPosao timovi={kluboviOpcije} trenira={klub} boravci={boravci}/>
 					<Button onClick={() => { this.izbrisiBoravak(klub) }} variant="danger">
 						Izbriši
 					</Button>
-					</div>
+					</div> : null}
 					<hr/>
 				</div>) : null}
 				{errorMsg ? <div>{errorMsg}</div> : null}

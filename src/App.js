@@ -30,6 +30,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DrzavaStatistika from './components/drzave/DrzavaStatistika';
 import KlubStatistika from './components/klub/KlubStatistika';
+import TrenerPodaci from './components/treneri/TrenerPodaci';
 
 
 function getToken() {
@@ -50,6 +51,7 @@ function App() {
       <br/>
       <Route path="/" exact component={HomePage} />
       <Route path="/igrac/:id" exact component={IgracStatistika} />
+      <Route path="/trener/:id" exact component={TrenerPodaci} />
       <Route path="/drzava/:id" exact component={DrzavaStatistika} />
       <Route path="/klub/:id" exact component={KlubStatistika} />
       <Route path="/pretraziigrace" exact component={PretraziIgrace} />
