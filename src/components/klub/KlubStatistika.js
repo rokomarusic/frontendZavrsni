@@ -175,7 +175,7 @@ class KlubStatistika extends Component {
                     </tr>)}
                 </tbody>
           </Table>
-          {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona}/>}
+          {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona} jeklub={1}/>}
         {klub && <KlubDogadaji idtim={klub.idtim} idklub={klub.idklub} sezona={this.state.sezona}/> }
         </div>
 		)

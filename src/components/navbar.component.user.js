@@ -29,7 +29,7 @@ export default class NavbarUser extends Component {
         </li>
           <li className="navbar-item">
           <Link to="/login" className="nav-link">
-            <Button variant="outline-success" type="button">Log in</Button>
+            <Button variant="outline-success" type="button">Prijavi se</Button>
           </Link>
           </li>
         </ul>

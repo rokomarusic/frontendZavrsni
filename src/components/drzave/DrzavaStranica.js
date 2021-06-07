@@ -49,13 +49,13 @@ class DrzavaStranica extends Component {
                 <h2>{fifakod}</h2>
                 {this.isSuperAdmin() ? <IzmjeniDrzavu id={idtim}/> : null}
                 {errorMsg ? <div>{errorMsg}</div> : null}
-                <div>
+                {idtim !== 89 ? <div>
                 <Link to={"/admin/gradovi/" + iddrzava +"/?drzava=" + nazivtim}>
                     <Button variant="info" type="button">
                         Pregledaj gradove
                     </Button>
                 </Link>
-                </div>
+                </div> : null}
                 <br/>
                 <div>
                 <Link to={"/admin/natjecanja/" + iddrzava +"/?drzava=" + nazivtim}>
@@ -65,13 +65,13 @@ class DrzavaStranica extends Component {
                 </Link>
                 </div>
                 <br/>
-                <div>
+                {idtim !== 89 ?<div>
                 <Link to={"/admin/klubovi/" + iddrzava +"/?drzava=" + nazivtim}>
                     <Button variant="info" type="button">
                         Pregledaj klubove
                     </Button>
                 </Link>
-                </div>
+                </div>: null}
 			</div>
 		)
 	}

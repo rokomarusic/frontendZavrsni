@@ -11,8 +11,10 @@ class Igraci extends Component {
 
 		this.state = {
       igraci: [],
+	  igraciBaza: [],
       errorMsg: '',
-	  drzave: []
+	  drzave: [],
+	  filterime: ''
 		}
 	}
 
@@ -21,7 +23,8 @@ class Igraci extends Component {
 			.get('http://localhost:3001/admin/igraci')
 			.then(response => {
 				console.log(response)
-				this.setState({ igraci: response.data })
+				this.setState({ igraciBaza: response.data,
+								igraci: [] })
 			})
 			.catch(error => {
         console.log(error)
@@ -67,16 +70,54 @@ class Igraci extends Component {
 		return userToken.authlevel === 1;
 	  }
 
+	  filterIgrace = () =>{
+
+
+        if(this.state.filterime.trim()){
+            
+               let temp =  this.state.igraciBaza.filter(el => el.imeigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
+                el.prezimeigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
+                ( el.nadimakigrac ? el.nadimakigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) : false))
+				
+				this.setState({igraci: temp})
+        }
+    }
+
+    handleInputChange = e => {
+		this.setState({
+		  [e.target.name]: e.target.value,
+		});
+	};
+
 	render() {
 		const { igraci, errorMsg } = this.state
 		return (
 			<div className="container">
-				<h1>Igraci</h1>
-				{this.isSuperAdmin() ? <div>
+				<h1>Igrači</h1>
+				 <div>
+				 {this.isSuperAdmin() ?<div>
 				<hr/>
 				<DodajIgraca drzave={this.state.drzave}/>
 				<hr/>
-				</div>:null}
+				</div>
+				:null}
+				<h2>Pretraži igrače</h2>
+				<br/>
+				<div>
+				<input
+					type="text"
+					name="filterime"
+					placeholder="naziv igrača"
+					onChange={this.handleInputChange}
+				/>
+				</div>
+				<br/>
+				<Button className="btn btn-success" type="button" onClick={this.filterIgrace}>
+                Prikaži igrače
+				</Button>
+					<br/>
+					<hr/>
+					</div>
 				{igraci.length
 					? igraci.map(igrac => 
                     <div key={igrac.idigrac}>
@@ -84,7 +125,7 @@ class Igraci extends Component {
                         <br/>
                         <Link to={"/admin/igrac/" + igrac.idigrac}>
                             <Button type="button">
-                                Pregledaj igraca
+                                Pregledaj igrača
                             </Button>
 							</Link>
 						<br/>

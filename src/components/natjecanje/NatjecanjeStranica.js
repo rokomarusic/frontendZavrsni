@@ -104,7 +104,7 @@ class NatjecanjeStranica extends Component {
               			<input
                 			type="text"
                 			name="filter"
-                			placeholder="naziv kluba"
+                			placeholder="naziv tima"
                 			onChange={this.handleInputChange}
               			/>
 						<div>
@@ -118,11 +118,16 @@ class NatjecanjeStranica extends Component {
 						<span>
 						{sudionik.nazivtim}
 						<br/>
-                        <Link to={"/admin/klub/" + sudionik.idtim}>
+                        {iddrzava !== 48 ? <Link to={"/admin/klub/" + sudionik.idtim}>
                             <Button type="button">
-                                Pregledaj klub
+                                Pregledaj tim
                             </Button>
-                        </Link>
+                        </Link> : 
+						<Link to={"/admin/drzava/" + sudionik.idtim}>
+						<Button type="button">
+							Pregledaj tim
+						</Button>
+						</Link> }
 						<br/>
 						{this.isSuperAdmin() ? <Button variant="danger" onClick={() => { this.izbrisiSudionika(sudionik.idtim) }}>
 							Ukloni iz natjecanja

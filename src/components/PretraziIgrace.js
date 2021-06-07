@@ -67,7 +67,7 @@ class PretraziIgrace extends Component {
             
                temp =  this.state.igraciBaza.filter(el => el.imeigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
                 el.prezimeigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
-                ( el.nadimakimeigrac ? el.nadimakimeigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) : false)
+                ( el.nadimakigrac ? el.nadimakigrac.toLowerCase().includes(this.state.filterime.toLowerCase()) : false)
             )
         }
 
@@ -94,7 +94,7 @@ class PretraziIgrace extends Component {
 		return (
 			<div className="container">
             <div>
-            <h2>Pretaži igrače</h2>
+            <h2>Pretraži igrače</h2>
             <br/>
                 <div>
                     država:
@@ -106,7 +106,7 @@ class PretraziIgrace extends Component {
             <input
                 type="text"
                 name="filterime"
-                placeholder="naziv igrača"
+                placeholder="ime igrača"
                 onChange={this.handleInputChange}
             />
             </div>
@@ -133,7 +133,7 @@ class PretraziIgrace extends Component {
                         <td>
                             <Link to={(igrac.pozicija === 'GK' ?"/golman/" :"/igrac/") + igrac.idigrac}>
                             <Button variant="outline-primary" type="button">
-                                Pregledaj igraca
+                                Pregledaj igrača
                             </Button>
                             </Link>
                         </td>

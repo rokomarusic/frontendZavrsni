@@ -159,7 +159,7 @@ class DrzavaStatistika extends Component {
                     </tr>)}
                 </tbody>
           </Table>
-          {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona}/>}
+          {this.state.id && this.state.sezona && <NajboljiStrijelciTima idtim={this.state.id} sezona={this.state.sezona} jeklub={0}/>}
           {this.state.drzava && <DrzavaDogadaji idtim={this.state.drzava.idtim} iddrzava={this.state.drzava.iddrzava} sezona={this.state.sezona}/> }
             </div>
 		)

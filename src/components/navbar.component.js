@@ -26,7 +26,7 @@ export default class NavbarAdmin extends Component {
           <Link to="/admin/treneri" className="nav-link">Treneri</Link>
           </li>
           <li className="navbar-item">
-            <Button variant="outline-danger" onClick={this.logout}>Logout</Button>
+            <Button variant="outline-danger" onClick={this.logout}>Odjavi se</Button>
           </li>
         </ul>
         </div>

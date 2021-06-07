@@ -194,8 +194,8 @@ toggleGostujuciIgracGolman= () =>{
       return;
     }
 
-    if(this.state.udaljenost < 0 || this.state.udaljenost > 150){
-        this.setState({errMsg: 'Udaljenost mora biti veća od 0'});
+    if(this.state.udaljenost < 16 || this.state.udaljenost > 150){
+        this.setState({errMsg: 'Udaljenost mora biti veća od 16'});
         return;
     }
 
@@ -333,7 +333,6 @@ toggleGostujuciIgracGolman= () =>{
                 onChange={this.handleInputChange}
                 required
               />
-              m
             </div>
             <br/>
             <div>

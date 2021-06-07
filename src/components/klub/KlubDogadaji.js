@@ -321,7 +321,7 @@ class KlubDogadaji extends Component {
 				<Box display="flex" p={1}>
 				<div>
 				<h2>Korneri</h2>
-				Efiksanost: {this.state.korneriPreciznost}
+				Postotak kornera iz kojih je zabijen gol: {this.state.korneriPreciznost}
 				<Box display="flex" p={1}>
                 <Card style={{ width: '18rem' }}>
 					<Card.Body>

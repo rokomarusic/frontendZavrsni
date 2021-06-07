@@ -45,7 +45,7 @@ class UtakmicaStranica extends Component {
 
 	prikaziDatum = (datum) => {
 		let temp = new Date(datum);
-		return temp.getUTCDay + "/" + temp.getUTCMonth + "/" + temp.getUTCFullYear
+		return temp.getDay() + "/" + temp.getMonth() + "/" + temp.getFullYear()
 	}
 
 	render() {
@@ -56,6 +56,7 @@ class UtakmicaStranica extends Component {
 				<div>
                 <h1>{utakmica.nazivdomacin} - {utakmica.nazivgost}</h1>
                 <h2>{utakmica.brgolovadomacin} - {utakmica.brgolovagost} </h2>
+				<h2>{this.prikaziDatum(utakmica.datumutakmica)}</h2>
 				<hr/>
 				<IzmjeniUtakmicu utakmica={utakmica}/>
 				<hr/>

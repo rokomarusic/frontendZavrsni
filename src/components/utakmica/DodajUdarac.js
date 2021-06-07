@@ -194,8 +194,8 @@ toggleGostujuciIgracGolman= () =>{
       return;
     }
 
-    if(this.state.udaljenost < 0 || this.state.udaljenost > 150){
-        this.setState({errMsg: 'Udaljenost mora biti veća od 0'});
+    if(this.state.udaljenost < 0 || this.state.udaljenost > 120){
+        this.setState({errMsg: 'Udaljenost mora biti minimalno 0, a maksimalno 120'});
         return;
       }
 

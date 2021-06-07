@@ -104,18 +104,16 @@ class DodajKlub extends Component {
 
     axios
       .post('http://localhost:3001/admin/dodajklub', klub)
-      .then(() => console.log('Dodan klub'))
+      .then(() => {
+        window.location = '/admin/klubovi/' + iddrzava;
+      })
       .catch(err => {
         console.log(err)
         this.setState({
-          nazivgrad: '',
           errMsg: 'Greška pri dodavanju kluba',
         });
       });
-      
-      if(!this.state.errMsg){
-        window.location = '/admin/klubovi/' + iddrzava;
-      }
+
   };
 
   toggleVisibility= () => {

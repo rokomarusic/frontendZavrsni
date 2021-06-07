@@ -33,8 +33,9 @@ class NajboljiStrijelciTima extends Component {
 
 	componentDidMount() {
 		axios
-			.get('http://localhost:3001/najboljistrijelcitima/' + this.props.idtim + "/?sezona=" + this.props.sezona)
+			.get('http://localhost:3001/najboljistrijelcitima/' + this.props.idtim + "?sezona=" + this.props.sezona + "&jeklub=" + this.props.jeklub)
 			.then(response => {
+                console.log("TUTUTUTUTU")
 				console.log(response)
 				this.setState({ igraci: response.data})
 			})
@@ -53,6 +54,7 @@ class NajboljiStrijelciTima extends Component {
                 <Table responsive>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>igrač</th>
                         <th>pozicija</th>
                         <th>broj golova</th>
@@ -60,9 +62,10 @@ class NajboljiStrijelciTima extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {igraci.map(igrac => 
+                    {igraci.map((igrac,index) => 
                     <tr key={igrac.idigrac}>
-                        <td>{igrac.nadimakigrac ? igrac.nadimakigrac : igrac.imeigrac + " " + igrac.prezimeigrac}</td>
+                        <td><b>{index + 1}</b></td>
+                        <td>{igrac.nadimakigrac ? <b>{igrac.nadimakigrac}</b> : <p>{igrac.imeigrac}  <b>{igrac.prezimeigrac}</b></p>}</td>
                         <td>{igrac.pozicija}</td>
                         <td>{igrac.brgolovakorner? (igrac.brgolova - igrac.brgolovakorner) : igrac.brgolova}</td>
                         <td>

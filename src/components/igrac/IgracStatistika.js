@@ -1005,7 +1005,7 @@ class IgracStatistika extends Component {
                 </Card>
 				<Card style={{ width: '18rem' }}>
                 <Card.Body>
-                    <Card.Title>Visine penala</Card.Title>
+                    <Card.Title>Visina penala</Card.Title>
                     <PieChart
                         data={[
                             { title: 'dolje', value: this.state.visineIgracStats.dolje, color: '#ff7849' },
@@ -1073,7 +1073,7 @@ class IgracStatistika extends Component {
 				<Box display="flex" p={1}>
 				<div>
 				<h2>Korneri</h2>
-				Efiksanost: {this.state.preciznostkornera}
+				Postotak kornera iz kojih je zabijen gol: {this.state.preciznostkornera}
 				<Box display="flex" p={1}>
 					<Card style={{ width: '18rem' }}>
 					<Card.Body>

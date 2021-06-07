@@ -86,7 +86,7 @@ class PretraziDrzave extends Component {
 		return (
 			<div className="container">
 				<Form onSubmit={this.handleSubmit}>
-					<h2>Pretraži reprezentacije</h2>
+					<h2>Pretraži države</h2>
                     <br/>
 					<div>
                         <div>
@@ -119,7 +119,7 @@ class PretraziDrzave extends Component {
                         <br/>
                         <Link to={"/drzava/" + drzava.idtim +"/?sezona=" + this.state.godinasezona}>
                             <Button type="button">
-                                    Pregledaj roster
+							Pregledaj podatke o državi za sezonu {this.state.godinasezona}
                             </Button>
                         </Link>
                     </ListGroup.Item>)

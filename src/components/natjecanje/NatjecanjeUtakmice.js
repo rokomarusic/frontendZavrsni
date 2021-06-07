@@ -52,7 +52,8 @@ class NatjecanjeUtakmice extends Component {
 		e.preventDefault();
 	
 		this.setState({
-			utakmice: this.state.utakmiceBaza.filter(el => el.nazivdomacin.toLowerCase().includes(this.state.filter.toLowerCase()))
+			utakmice: this.state.utakmiceBaza.filter(el => el.nazivdomacin.toLowerCase().includes(this.state.filter.toLowerCase())||
+						el.nazivgost.toLowerCase().includes(this.state.filter.toLowerCase()))
 		  })
 
 		  this.setState({
@@ -82,7 +83,7 @@ class NatjecanjeUtakmice extends Component {
               			<input
                 			type="text"
                 			name="filter"
-                			placeholder="naziv domaćina"
+                			placeholder="naziv tima"
                 			onChange={this.handleInputChange}
               			/>
 						<div>
@@ -94,8 +95,9 @@ class NatjecanjeUtakmice extends Component {
 				{utakmice.length
 					? utakmice.map(utakmica => 
                     <div key={utakmica.idutakmica}>
+						<br/>
                         {utakmica.nazivdomacin} - {utakmica.nazivgost} {utakmica.brgolovadomacin} : {utakmica.brgolovagost}
-                        <br/>
+						{utakmica.kolo ? <p>kolo : {utakmica.kolo}</p> : <p>faza natjecanja: {utakmica.fazanatjecanje}</p>}
                         <Link to={"/admin/utakmica/" + utakmica.idutakmica}>
                             <Button type="button">
                                 Pregledaj utakmicu
@@ -105,6 +107,7 @@ class NatjecanjeUtakmice extends Component {
 						<Button variant="danger" onClick={() => { this.izbrisiUtakmicu(utakmica.idutakmica) }}>
 							Izbriši
 						</Button>
+						<hr/>
                     </div>)
                 : null}
         		{errorMsg ? <h1 style={{color: "red"}}>{errorMsg}</h1> : null}

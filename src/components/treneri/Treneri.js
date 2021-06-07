@@ -11,8 +11,10 @@ class Treneri extends Component {
 
 		this.state = {
       treneri: undefined,
+	  treneriBaza: [],
 	  drzave: undefined,
       errorMsg: '',
+	  filterime: ''
 		}
 	}
 
@@ -27,7 +29,8 @@ class Treneri extends Component {
 			.get('http://localhost:3001/admin/treneri')
 			.then(response => {
 				console.log(response)
-				this.setState({ treneri: response.data })
+				this.setState({ treneriBaza: response.data,
+								treneri: [] })
 			})
 			.catch(error => {
         console.log(error)
@@ -69,17 +72,54 @@ class Treneri extends Component {
 		})
 	  }
 
+	  filterIgrace = () =>{
+
+
+        if(this.state.filterime.trim()){
+            
+               let temp =  this.state.treneriBaza.filter(el => el.imetrener.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
+                el.prezimetrener.toLowerCase().includes(this.state.filterime.toLowerCase()) ||
+                ( el.nadimaktrener ? el.nadimaktrener.toLowerCase().includes(this.state.filterime.toLowerCase()) : false))
+				
+				this.setState({treneri: temp})
+        }
+    }
+
+    handleInputChange = e => {
+		this.setState({
+		  [e.target.name]: e.target.value,
+		});
+	};
+
 	render() {
 		const { treneri, errorMsg, drzave} = this.state
 		return (
 			<div className="container">
 				{treneri && <div>
 				<h1>treneri</h1>
-				{this.isSuperAdmin() ? <div>
+				 <div>
+				 {this.isSuperAdmin() ?<div>
 				<hr/>
 				<DodajTrenera drzave={drzave}/>
 				<hr/>
 				</div> : null}
+				<h2>Pretaži trenere</h2>
+				<br/>
+				<div>
+				<input
+					type="text"
+					name="filterime"
+					placeholder="naziv trenera"
+					onChange={this.handleInputChange}
+				/>
+				</div>
+				<br/>
+				<Button className="btn btn-success" type="button" onClick={this.filterIgrace}>
+                Prikaži trenere
+				</Button>
+				<br/>
+				<hr/>
+				</div>
 				{treneri.length
 					? treneri.map(trener => 
                     <div key={trener.idtrener}>

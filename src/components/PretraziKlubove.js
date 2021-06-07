@@ -161,7 +161,7 @@ class PretraziDrzave extends Component {
                         <br/>
                         <Link to={"/klub/" + klub.idtim +"/?sezona=" + this.state.godinasezona}>
                             <Button type="button">
-                                    Pregledaj roster
+                                    Pregledaj podatke o klubu za sezonu {this.state.godinasezona}
                             </Button>
                         </Link>
                     </ListGroup.Item>)
